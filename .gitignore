@@ -1,0 +1,34 @@
+# ====================
+# .NET (.NET Core / ASP.NET)
+# ====================
+**/bin/
+**/obj/
+**/packages/
+**/*.user
+**/*.suo
+**/*.userosscache
+**/*.sln.docstates
+**/.vs/
+**/.vscode/
+
+# NuGet
+**/project.lock.json
+**/project.assets.json
+**/nuget.config
+**/nuget.exe
+**/packages.config
+**/packages/*
+
+# Publish outputs
+**/publish/
+**/out/
+
+# Rider / ReSharper / JetBrains
+**/.idea/
+**/*.sln.iml
+**/riderModule.iml
+**/_ReSharper.*
+**/.ReSharper.*
+**/.DotSettings.user
+**/.DotCover/
+
