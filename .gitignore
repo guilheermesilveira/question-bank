@@ -1,34 +1,91 @@
-# ====================
-# .NET (.NET Core / ASP.NET)
-# ====================
-**/bin/
-**/obj/
-**/packages/
-**/*.user
-**/*.suo
-**/*.userosscache
-**/*.sln.docstates
-**/.vs/
-**/.vscode/
+# ============================
+# .NET / C#
+# ============================
 
-# NuGet
-**/project.lock.json
-**/project.assets.json
-**/nuget.config
-**/nuget.exe
-**/packages.config
-**/packages/*
+## Ignore build outputs
+bin/
+obj/
 
-# Publish outputs
-**/publish/
-**/out/
+## User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.vs/
+.vscode/
+*.dbmdl
+*.pdb
+*.cache
+*.log
+*.tlog
+*.ilk
+*.tmp
+*.csproj.user
 
-# Rider / ReSharper / JetBrains
-**/.idea/
-**/*.sln.iml
-**/riderModule.iml
-**/_ReSharper.*
-**/.ReSharper.*
-**/.DotSettings.user
-**/.DotCover/
+## NuGet packages
+*.nupkg
+packages/
+*.snupkg
+
+## ASP.NET specific
+wwwroot/node_modules/
+
+## Rider IDE
+.idea/
+
+# ============================
+# Angular
+# ============================
+
+# Compiled output
+/dist/
+/out-tsc/
+/build/
+
+# NPM packages
+/node_modules/
+
+# Angular cache
+.angular/
+.angular/cache/
+
+# IDE files
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# ============================
+# General
+# ============================
+
+# Logs
+*.log
+
+# Others
+*.swp
+*.bak
+*.tmp
+*.temp
+*.orig
+*.rej
+
+# dotenv files
+.env
+.env.*
+
+# Ignore test coverage results
+coverage/
+
+# Ignore local secrets
+secrets.*
 
