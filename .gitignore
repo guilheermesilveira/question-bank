@@ -35,6 +35,7 @@ wwwroot/node_modules/
 
 ## Development
 **/appsettings.Development.json
+**/keys
 
 # ============================
 # Angular
