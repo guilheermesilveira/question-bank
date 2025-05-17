@@ -33,6 +33,10 @@ wwwroot/node_modules/
 ## Rider IDE
 .idea/
 
+## Development
+**/appsettings.Development.json
+**/keys
+
 # ============================
 # Angular
 # ============================
