@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using QuestionBank.Api.Responses;
 using QuestionBank.Application.Contracts.Services;
 using QuestionBank.Application.DTOs.Auth;
+using QuestionBank.Application.DTOs.User;
 using QuestionBank.Application.Notifications;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -28,5 +29,15 @@ public class AuthController : BaseController
     {
         var token = await _authService.Login(dto);
         return token != null ? OkResponse(token) : Unauthorized(new[] { "Incorrect email and/or password" });
+    }
+
+    [HttpPost]
+    [SwaggerOperation(Summary = "Register a user", Tags = new[] { "Authentication" })]
+    [ProducesResponseType(typeof(UserDto), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(BadRequestResponse), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> Register([FromBody] AddUserDto dto)
+    {
+        var user = await _authService.Register(dto);
+        return CreatedResponse("", user);
     }
 }
