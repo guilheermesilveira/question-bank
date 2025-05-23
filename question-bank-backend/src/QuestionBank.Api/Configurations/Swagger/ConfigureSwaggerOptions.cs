@@ -39,7 +39,7 @@ public class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
 
         var info = new OpenApiInfo
         {
-            Title = "Academic Library API",
+            Title = "Question Bank API",
             Version = description.ApiVersion.ToString(),
             Contact = contact,
             License = license
