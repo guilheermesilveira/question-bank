@@ -34,6 +34,7 @@ public static class DependencyInjection
             .AddScoped<INotificator, Notificator>();
 
         services
-            .AddScoped<IAuthService, AuthService>();
+            .AddScoped<IAuthService, AuthService>()
+            .AddScoped<IUserService, UserService>();
     }
 }

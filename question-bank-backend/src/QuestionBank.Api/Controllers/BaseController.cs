@@ -8,7 +8,6 @@ namespace QuestionBank.Api.Controllers;
 [Authorize]
 [ApiController]
 [ApiVersion("1.0")]
-[Route("api/v{version:apiVersion}/[controller]")]
 public abstract class BaseController : Controller
 {
     private readonly INotificator _notificator;
@@ -19,13 +18,19 @@ public abstract class BaseController : Controller
     }
 
     protected IActionResult CreatedResponse(string uri = "", object? result = null)
-        => CustomResponse(Created(uri, result));
+    {
+        return CustomResponse(Created(uri, result));
+    }
 
     protected IActionResult OkResponse(object? result = null)
-        => CustomResponse(Ok(result));
+    {
+        return CustomResponse(Ok(result));
+    }
 
     protected IActionResult NoContentResponse()
-        => CustomResponse(NoContent());
+    {
+        return CustomResponse(NoContent());
+    }
 
     private IActionResult CustomResponse(IActionResult objectResult)
     {

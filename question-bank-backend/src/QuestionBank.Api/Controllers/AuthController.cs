@@ -31,7 +31,7 @@ public class AuthController : BaseController
         return token != null ? OkResponse(token) : Unauthorized(new[] { "Incorrect email and/or password" });
     }
 
-    [HttpPost]
+    [HttpPost("register")]
     [SwaggerOperation(Summary = "Register a user", Tags = new[] { "Authentication" })]
     [ProducesResponseType(typeof(UserDto), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(BadRequestResponse), StatusCodes.Status400BadRequest)]
