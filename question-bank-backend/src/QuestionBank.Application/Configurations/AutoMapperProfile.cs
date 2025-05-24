@@ -9,10 +9,11 @@ public class AutoMapperProfile : Profile
 {
     public AutoMapperProfile()
     {
-        #region Auth
+        #region Auth & User
 
         CreateMap<LoginDto, User>();
         CreateMap<AddUserDto, User>();
+        CreateMap<UpdateUserDto, User>();
         CreateMap<User, UserDto>();
 
         #endregion
