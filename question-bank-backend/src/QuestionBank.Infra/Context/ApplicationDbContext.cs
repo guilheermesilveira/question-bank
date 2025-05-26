@@ -12,6 +12,7 @@ public class ApplicationDbContext : DbContext, IUnitOfWork
     }
 
     public DbSet<User> Users { get; set; } = null!;
+    public DbSet<Question> Questions { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

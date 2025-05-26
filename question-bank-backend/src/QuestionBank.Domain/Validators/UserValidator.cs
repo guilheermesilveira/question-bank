@@ -9,20 +9,20 @@ public class UserValidator : AbstractValidator<User>
     {
         RuleFor(u => u.Name)
             .NotNull()
-            .WithMessage("The name cannot be null")
+            .WithMessage("Name cannot be null")
             .Length(3, 50)
-            .WithMessage("The name must contain between {MinLength} and {MaxLength} characters");
+            .WithMessage("Name must contain between {MinLength} and {MaxLength} characters");
 
         RuleFor(u => u.Email)
             .NotNull()
             .WithMessage("Email cannot be null")
             .EmailAddress()
-            .WithMessage("The email provided is not valid");
+            .WithMessage("Email provided is not valid");
 
         RuleFor(u => u.Password)
             .NotNull()
             .WithMessage("Password cannot be null")
             .Length(5, 15)
-            .WithMessage("The password must contain between {MinLength} and {MaxLength} characters");
+            .WithMessage("Password must contain between {MinLength} and {MaxLength} characters");
     }
 }

@@ -8,5 +8,6 @@ public interface IUserRepository : IRepository<User>
     void Update(User user);
     Task<IPagination<User>> Search(int? id, string? name, string? email, int numberOfItemsPerPage = 10,
         int currentPage = 1);
+    Task<User?> GetById(int id);
     Task<List<User>> GetAll();
 }

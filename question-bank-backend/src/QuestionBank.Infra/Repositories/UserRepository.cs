@@ -57,6 +57,11 @@ public class UserRepository : Repository<User>, IUserRepository
         return result;
     }
 
+    public async Task<User?> GetById(int id)
+    {
+        return await Context.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Id == id);
+    }
+
     public async Task<List<User>> GetAll()
     {
         return await Context.Users.AsNoTracking().ToListAsync();
