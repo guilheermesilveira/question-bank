@@ -31,6 +31,7 @@ public static class DependencyInjection
     private static void ConfigRepositoryDependency(this IServiceCollection services)
     {
         services
-            .AddScoped<IUserRepository, UserRepository>();
+            .AddScoped<IUserRepository, UserRepository>()
+            .AddScoped<IQuestionRepository, QuestionRepository>();
     }
 }
