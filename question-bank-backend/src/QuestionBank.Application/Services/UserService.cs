@@ -69,6 +69,16 @@ public class UserService : BaseService, IUserService
         };
     }
 
+    public async Task<UserDto?> GetById(int id)
+    {
+        var user = await _userRepository.GetById(id);
+        if (user != null)
+            return Mapper.Map<UserDto>(user);
+
+        Notificator.HandleNotFoundResource();
+        return null;
+    }
+
     public async Task<List<UserDto>> GetAll()
     {
         var users = await _userRepository.GetAll();
