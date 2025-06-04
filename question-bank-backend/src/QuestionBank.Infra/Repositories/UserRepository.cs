@@ -24,7 +24,6 @@ public class UserRepository : Repository<User>, IUserRepository
     }
 
     public async Task<IPagination<User>> Search(
-        int? id,
         string? name,
         string? email,
         int numberOfItemsPerPage = 10,
@@ -33,9 +32,6 @@ public class UserRepository : Repository<User>, IUserRepository
         var query = Context.Users
             .AsNoTracking()
             .AsQueryable();
-
-        if (id.HasValue)
-            query = query.Where(u => u.Id == id);
 
         if (!string.IsNullOrEmpty(name))
             query = query.Where(u => u.Name.Contains(name));

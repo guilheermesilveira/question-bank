@@ -25,7 +25,6 @@ public class QuestionRepository : Repository<Question>, IQuestionRepository
     }
 
     public async Task<IPagination<Question>> Search(
-        int? id,
         string? statement,
         EDifficultyLevel? difficulty,
         int numberOfItemsPerPage = 10,
@@ -34,9 +33,6 @@ public class QuestionRepository : Repository<Question>, IQuestionRepository
         var query = Context.Questions
             .AsNoTracking()
             .AsQueryable();
-
-        if (id.HasValue)
-            query = query.Where(q => q.Id == id);
 
         if (!string.IsNullOrEmpty(statement))
             query = query.Where(q => q.Statement.Contains(statement));

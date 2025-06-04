@@ -7,8 +7,8 @@ public interface IQuestionRepository : IRepository<Question>
 {
     void Add(Question question);
     void Update(Question question);
-    Task<IPagination<Question>> Search(int? id, string? statement, EDifficultyLevel? difficulty,
-        int numberOfItemsPerPage = 10, int currentPage = 1);
+    Task<IPagination<Question>> Search(string? statement, EDifficultyLevel? difficulty, int numberOfItemsPerPage = 10,
+        int currentPage = 1);
     Task<Question?> GetById(int id);
     Task<List<Question>> GetAll();
 }

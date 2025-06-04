@@ -56,7 +56,7 @@ public class UserService : BaseService, IUserService
 
     public async Task<PaginationDto<UserDto>> Search(SearchUserDto dto)
     {
-        var result = await _userRepository.Search(dto.Id, dto.Name, dto.Email, dto.NumberOfItemsPerPage,
+        var result = await _userRepository.Search(dto.Name, dto.Email, dto.NumberOfItemsPerPage,
             dto.CurrentPage);
 
         return new PaginationDto<UserDto>

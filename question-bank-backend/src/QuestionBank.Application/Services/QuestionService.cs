@@ -48,7 +48,7 @@ public class QuestionService : BaseService, IQuestionService
 
     public async Task<PaginationDto<QuestionDto>> Search(SearchQuestionDto dto)
     {
-        var result = await _questionRepository.Search(dto.Id, dto.Statement, dto.Difficulty,
+        var result = await _questionRepository.Search(dto.Statement, dto.Difficulty,
             dto.NumberOfItemsPerPage, dto.CurrentPage);
 
         return new PaginationDto<QuestionDto>
