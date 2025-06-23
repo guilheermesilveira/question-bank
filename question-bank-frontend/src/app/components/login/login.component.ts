@@ -10,6 +10,7 @@ import { LoginService } from 'src/app/services/login/login.service';
 export class LoginComponent {
 
   formGroup!: FormGroup;
+  credentialsValid: boolean = true;
 
   constructor(
     private service: LoginService,
@@ -30,8 +31,8 @@ export class LoginComponent {
       const email = String(this.formGroup.get('email')?.value);
       const password = String(this.formGroup.get('password')?.value);
       this.service.login(email, password).subscribe({
-        next: () => console.log('deu certo'),
-        error: error => console.log(error)
+        next: () => this.credentialsValid = true,
+        error: () => this.credentialsValid = false
       });
     }
   }
