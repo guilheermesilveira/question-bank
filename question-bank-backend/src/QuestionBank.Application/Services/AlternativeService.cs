@@ -100,6 +100,19 @@ public class AlternativeService : BaseService, IAlternativeService
             return false;
         }
 
+        var alternatives = await _alternativeRepository.Search(null, null, questionExist.Id);
+        if (alternatives.Items.Count == 5)
+        {
+            Notificator.Handle("This question already has five alternatives");
+            return false;
+        }
+
+        if (dto.IsCorrect && alternatives.Items.Any(a => a.IsCorrect))
+        {
+            Notificator.Handle("There is already an alternative marked as correct for this question");
+            return false;
+        }
+
         return true;
     }
 
