@@ -1,10 +1,11 @@
-namespace QuestionBank.Application.DTOs.Alternative;
+namespace QuestionBank.Application.DTOs.UserAnswer;
 
-public class SearchAlternativeDto
+public class SearchUserAnswerDto
 {
-    public string? Text { get; set; }
     public bool? IsCorrect { get; set; }
+    public int? UserId { get; set; }
     public int? QuestionId { get; set; }
+    public int? AlternativeId { get; set; }
     public int NumberOfItemsPerPage { get; set; } = 10;
     public int CurrentPage { get; set; } = 1;
 }

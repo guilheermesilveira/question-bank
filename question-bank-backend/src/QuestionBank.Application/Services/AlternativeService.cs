@@ -12,14 +12,17 @@ namespace QuestionBank.Application.Services;
 public class AlternativeService : BaseService, IAlternativeService
 {
     private readonly IAlternativeRepository _alternativeRepository;
+    private readonly IQuestionRepository _questionRepository;
 
     public AlternativeService(
         INotificator notificator,
         IMapper mapper,
-        IAlternativeRepository alternativeRepository
+        IAlternativeRepository alternativeRepository,
+        IQuestionRepository questionRepository
     ) : base(notificator, mapper)
     {
         _alternativeRepository = alternativeRepository;
+        _questionRepository = questionRepository;
     }
 
     public async Task<AlternativeDto?> Add(AddAlternativeDto dto)
@@ -41,6 +44,7 @@ public class AlternativeService : BaseService, IAlternativeService
         var alternative = await _alternativeRepository.FirstOrDefault(a => a.Id == id);
         alternative!.Text = dto.Text;
         alternative.IsCorrect = dto.IsCorrect;
+        alternative.QuestionId = dto.QuestionId;
         _alternativeRepository.Update(alternative);
 
         return await CommitChanges() ? Mapper.Map<AlternativeDto>(alternative) : null;
@@ -48,8 +52,8 @@ public class AlternativeService : BaseService, IAlternativeService
 
     public async Task<PaginationDto<AlternativeDto>> Search(SearchAlternativeDto dto)
     {
-        var result = await _alternativeRepository.Search(dto.Text, dto.IsCorrect, dto.NumberOfItemsPerPage,
-            dto.CurrentPage);
+        var result = await _alternativeRepository.Search(dto.Text, dto.IsCorrect, dto.QuestionId,
+            dto.NumberOfItemsPerPage, dto.CurrentPage);
 
         return new PaginationDto<AlternativeDto>
         {
@@ -89,6 +93,13 @@ public class AlternativeService : BaseService, IAlternativeService
             return false;
         }
 
+        var questionExist = await _questionRepository.GetById(dto.QuestionId);
+        if (questionExist == null)
+        {
+            Notificator.Handle("Question not found");
+            return false;
+        }
+
         return true;
     }
 
@@ -104,6 +115,13 @@ public class AlternativeService : BaseService, IAlternativeService
         if (alternativeExist == null)
         {
             Notificator.HandleNotFoundResource();
+            return false;
+        }
+
+        var questionExist = await _questionRepository.GetById(dto.QuestionId);
+        if (questionExist == null)
+        {
+            Notificator.Handle("Question not found");
             return false;
         }
 

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using QuestionBank.Api.Responses;
 using QuestionBank.Application.Contracts.Services;
+using QuestionBank.Application.DTOs.Pagination;
 using QuestionBank.Application.DTOs.UserAnswer;
 using QuestionBank.Application.Notifications;
 using Swashbuckle.AspNetCore.Annotations;
@@ -26,6 +27,16 @@ public class UserAnswerController : BaseController
     {
         var userAnswer = await _userAnswerService.Add(dto);
         return CreatedResponse("", userAnswer);
+    }
+
+    [HttpGet("search")]
+    [SwaggerOperation(Summary = "Search by user answers", Tags = new[] { "UserAnswers" })]
+    [ProducesResponseType(typeof(PaginationDto<UserAnswerDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    public async Task<IActionResult> Search([FromQuery] SearchUserAnswerDto dto)
+    {
+        var userAnswers = await _userAnswerService.Search(dto);
+        return OkResponse(userAnswers);
     }
 
     [HttpGet("get-by-id/{id}")]

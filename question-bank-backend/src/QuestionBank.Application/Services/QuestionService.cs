@@ -12,14 +12,17 @@ namespace QuestionBank.Application.Services;
 public class QuestionService : BaseService, IQuestionService
 {
     private readonly IQuestionRepository _questionRepository;
+    private readonly ITopicRepository _topicRepository;
 
     public QuestionService(
         INotificator notificator,
         IMapper mapper,
-        IQuestionRepository questionRepository
+        IQuestionRepository questionRepository,
+        ITopicRepository topicRepository
     ) : base(notificator, mapper)
     {
         _questionRepository = questionRepository;
+        _topicRepository = topicRepository;
     }
 
     public async Task<QuestionDto?> Add(AddQuestionDto dto)
@@ -41,6 +44,7 @@ public class QuestionService : BaseService, IQuestionService
         var question = await _questionRepository.FirstOrDefault(q => q.Id == id);
         question!.Statement = dto.Statement;
         question.Difficulty = dto.Difficulty;
+        question.TopicId = dto.TopicId;
         _questionRepository.Update(question);
 
         return await CommitChanges() ? Mapper.Map<QuestionDto>(question) : null;
@@ -48,7 +52,7 @@ public class QuestionService : BaseService, IQuestionService
 
     public async Task<PaginationDto<QuestionDto>> Search(SearchQuestionDto dto)
     {
-        var result = await _questionRepository.Search(dto.Statement, dto.Difficulty,
+        var result = await _questionRepository.Search(dto.Statement, dto.Difficulty, dto.TopicId,
             dto.NumberOfItemsPerPage, dto.CurrentPage);
 
         return new PaginationDto<QuestionDto>
@@ -88,6 +92,13 @@ public class QuestionService : BaseService, IQuestionService
             Notificator.Handle(result.Errors);
             return false;
         }
+        
+        var topicExist = await _topicRepository.GetById(dto.TopicId);
+        if (topicExist == null)
+        {
+            Notificator.Handle("Topic not found");
+            return false;
+        }
 
         return true;
     }
@@ -104,6 +115,13 @@ public class QuestionService : BaseService, IQuestionService
         if (questionExist == null)
         {
             Notificator.HandleNotFoundResource();
+            return false;
+        }
+        
+        var topicExist = await _topicRepository.GetById(dto.TopicId);
+        if (topicExist == null)
+        {
+            Notificator.Handle("Topic not found");
             return false;
         }
 

@@ -27,6 +27,7 @@ public class QuestionRepository : Repository<Question>, IQuestionRepository
     public async Task<IPagination<Question>> Search(
         string? statement,
         EDifficultyLevel? difficulty,
+        int? topicId,
         int numberOfItemsPerPage = 10,
         int currentPage = 1)
     {
@@ -39,6 +40,9 @@ public class QuestionRepository : Repository<Question>, IQuestionRepository
 
         if (difficulty.HasValue)
             query = query.Where(q => q.Difficulty.Equals(difficulty));
+        
+        if (topicId.HasValue)
+            query = query.Where(q => q.TopicId == topicId);
 
         var result = new Pagination<Question>
         {

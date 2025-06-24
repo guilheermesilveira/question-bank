@@ -26,6 +26,7 @@ public class AlternativeRepository : Repository<Alternative>, IAlternativeReposi
     public async Task<IPagination<Alternative>> Search(
         string? text,
         bool? isCorrect,
+        int? questionId,
         int numberOfItemsPerPage = 10,
         int currentPage = 1)
     {
@@ -38,6 +39,9 @@ public class AlternativeRepository : Repository<Alternative>, IAlternativeReposi
 
         if (isCorrect.HasValue)
             query = query.Where(a => a.IsCorrect == isCorrect);
+        
+        if (questionId.HasValue)
+            query = query.Where(a => a.QuestionId == questionId);
 
         var result = new Pagination<Alternative>
         {
