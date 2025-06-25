@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { LoginService } from 'src/app/services/login/login.service';
 
 @Component({
@@ -14,7 +15,8 @@ export class LoginComponent {
 
   constructor(
     private service: LoginService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private router: Router
   ) {
     this.initForm();
   }
@@ -31,7 +33,10 @@ export class LoginComponent {
       const email = String(this.formGroup.get('email')?.value);
       const password = String(this.formGroup.get('password')?.value);
       this.service.login(email, password).subscribe({
-        next: () => this.credentialsValid = true,
+        next: () => {
+          this.credentialsValid = true;
+          this.router.navigate(['/dashboard']);
+        },
         error: () => this.credentialsValid = false
       });
     }

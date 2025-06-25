@@ -7,11 +7,13 @@ import { LoginComponent } from './components/login/login.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { ReactiveFormsModule } from '@angular/forms';
+import { LayoutComponent } from './components/layout/layout.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    LayoutComponent
   ],
   imports: [
     BrowserModule,
