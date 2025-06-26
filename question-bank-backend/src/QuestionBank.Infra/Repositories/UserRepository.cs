@@ -23,6 +23,11 @@ public class UserRepository : Repository<User>, IUserRepository
         Context.Users.Update(user);
     }
 
+    public void Delete(User user)
+    {
+        Context.Users.Remove(user);
+    }
+
     public async Task<IPagination<User>> Search(
         string? name,
         string? email,

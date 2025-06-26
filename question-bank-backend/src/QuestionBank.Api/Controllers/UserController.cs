@@ -41,6 +41,17 @@ public class UserController : BaseController
         return OkResponse(user);
     }
 
+    [HttpDelete("{id}")]
+    [SwaggerOperation(Summary = "Delete a user", Tags = new[] { "Users" })]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> Delete(int id)
+    {
+        await _userService.Delete(id);
+        return NoContentResponse();
+    }
+
     [HttpGet("search")]
     [SwaggerOperation(Summary = "Search by users", Tags = new[] { "Users" })]
     [ProducesResponseType(typeof(PaginationDto<UserDto>), StatusCodes.Status200OK)]

@@ -54,6 +54,19 @@ public class UserService : BaseService, IUserService
         return await CommitChanges() ? Mapper.Map<UserDto>(user) : null;
     }
 
+    public async Task Delete(int id)
+    {
+        var user = await _userRepository.GetById(id);
+        if (user == null)
+        {
+            Notificator.HandleNotFoundResource();
+            return;
+        }
+
+        _userRepository.Delete(user);
+        await CommitChanges();
+    }
+
     public async Task<PaginationDto<UserDto>> Search(SearchUserDto dto)
     {
         var result = await _userRepository.Search(dto.Name, dto.Email, dto.NumberOfItemsPerPage,
