@@ -9,14 +9,20 @@ import { AddUser, SearchUser, UpdateUser, User } from 'src/app/models/user.model
 })
 export class UserService {
 
+  private readonly api = '/backend/api/v1/user';
+
   constructor(private http: HttpClient) { }
 
   add(user: AddUser): Observable<User> {
-    return this.http.post<User>('/backend/api/v1/user', { user });
+    return this.http.post<User>(this.api, user);
   }
 
   update(user: UpdateUser): Observable<User> {
-    return this.http.put<User>(`/backend/api/v1/user/${user.id}`, { user });
+    return this.http.put<User>(`${this.api}/${user.id}`, user);
+  }
+
+  delete(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.api}/${id}`);
   }
 
   search(user: SearchUser): Observable<Pagination<User>> {
@@ -30,14 +36,14 @@ export class UserService {
       params = params.set('email', user.email);
     }
 
-    return this.http.get<Pagination<User>>('/backend/api/v1/user/search', { params });
+    return this.http.get<Pagination<User>>(`${this.api}/search`, { params });
   }
 
   getById(id: number): Observable<User> {
-    return this.http.get<User>(`/backend/api/v1/user/get-by-id/${id}`);
+    return this.http.get<User>(`${this.api}/get-by-id/${id}`);
   }
 
   getAll(): Observable<User[]> {
-    return this.http.get<User[]>('/backend/api/v1/user/get-all');
+    return this.http.get<User[]>(`${this.api}/get-all`);
   }
 }

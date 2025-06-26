@@ -96,5 +96,15 @@ export class UserComponent implements OnInit {
     this.formGroup.patchValue(user);
   }
 
-  deleteUser(id: number): void { }
+  deleteUser(id: number): void {
+    if (confirm('Tem certeza que deseja excluir este usuário?')) {
+      this.userService.delete(id).subscribe({
+        next: () => {
+          this.errorMessage = null;
+          this.loadUsers();
+        },
+        error: () => this.errorMessage = 'Erro ao deletar usuário. Tente novamente.'
+      });
+    }
+  }
 }
