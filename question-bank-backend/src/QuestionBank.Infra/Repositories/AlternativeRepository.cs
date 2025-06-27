@@ -23,6 +23,11 @@ public class AlternativeRepository : Repository<Alternative>, IAlternativeReposi
         Context.Alternatives.Update(alternative);
     }
 
+    public void Delete(Alternative alternative)
+    {
+        Context.Alternatives.Remove(alternative);
+    }
+
     public async Task<IPagination<Alternative>> Search(
         string? text,
         bool? isCorrect,
@@ -39,7 +44,7 @@ public class AlternativeRepository : Repository<Alternative>, IAlternativeReposi
 
         if (isCorrect.HasValue)
             query = query.Where(a => a.IsCorrect == isCorrect);
-        
+
         if (questionId.HasValue)
             query = query.Where(a => a.QuestionId == questionId);
 

@@ -7,6 +7,7 @@ public interface IQuestionRepository : IRepository<Question>
 {
     void Add(Question question);
     void Update(Question question);
+    void Delete(Question question);
     Task<IPagination<Question>> Search(string? statement, EDifficultyLevel? difficulty, int? topicId,
         int numberOfItemsPerPage = 10, int currentPage = 1);
     Task<Question?> GetById(int id);

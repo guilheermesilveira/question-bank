@@ -40,6 +40,17 @@ public class AlternativeController : BaseController
         var alternative = await _alternativeService.Update(id, dto);
         return OkResponse(alternative);
     }
+    
+    [HttpDelete("{id}")]
+    [SwaggerOperation(Summary = "Delete a alternative", Tags = new[] { "Alternatives" })]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> Delete(int id)
+    {
+        await _alternativeService.Delete(id);
+        return NoContentResponse();
+    }
 
     [HttpGet("search")]
     [SwaggerOperation(Summary = "Search by alternatives", Tags = new[] { "Alternatives" })]

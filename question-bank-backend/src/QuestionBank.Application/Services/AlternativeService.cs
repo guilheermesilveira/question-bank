@@ -50,6 +50,19 @@ public class AlternativeService : BaseService, IAlternativeService
         return await CommitChanges() ? Mapper.Map<AlternativeDto>(alternative) : null;
     }
 
+    public async Task Delete(int id)
+    {
+        var alternative = await _alternativeRepository.GetById(id);
+        if (alternative == null)
+        {
+            Notificator.HandleNotFoundResource();
+            return;
+        }
+
+        _alternativeRepository.Delete(alternative);
+        await CommitChanges();
+    }
+
     public async Task<PaginationDto<AlternativeDto>> Search(SearchAlternativeDto dto)
     {
         var result = await _alternativeRepository.Search(dto.Text, dto.IsCorrect, dto.QuestionId,

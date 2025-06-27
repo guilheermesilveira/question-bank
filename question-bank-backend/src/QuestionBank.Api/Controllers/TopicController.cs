@@ -40,6 +40,17 @@ public class TopicController : BaseController
         var topic = await _topicService.Update(id, dto);
         return OkResponse(topic);
     }
+    
+    [HttpDelete("{id}")]
+    [SwaggerOperation(Summary = "Delete a topic", Tags = new[] { "Topics" })]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> Delete(int id)
+    {
+        await _topicService.Delete(id);
+        return NoContentResponse();
+    }
 
     [HttpGet("search")]
     [SwaggerOperation(Summary = "Search by topics", Tags = new[] { "Topics" })]

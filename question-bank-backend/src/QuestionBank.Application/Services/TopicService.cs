@@ -45,6 +45,19 @@ public class TopicService : BaseService, ITopicService
         return await CommitChanges() ? Mapper.Map<TopicDto>(topic) : null;
     }
 
+    public async Task Delete(int id)
+    {
+        var topic = await _topicRepository.GetById(id);
+        if (topic == null)
+        {
+            Notificator.HandleNotFoundResource();
+            return;
+        }
+        
+        _topicRepository.Delete(topic);
+        await CommitChanges();
+    }
+
     public async Task<PaginationDto<TopicDto>> Search(SearchTopicDto dto)
     {
         var result = await _topicRepository.Search(dto.Name, dto.NumberOfItemsPerPage, dto.CurrentPage);

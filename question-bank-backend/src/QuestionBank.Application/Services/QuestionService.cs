@@ -50,6 +50,19 @@ public class QuestionService : BaseService, IQuestionService
         return await CommitChanges() ? Mapper.Map<QuestionDto>(question) : null;
     }
 
+    public async Task Delete(int id)
+    {
+        var question = await _questionRepository.GetById(id);
+        if (question == null)
+        {
+            Notificator.HandleNotFoundResource();
+            return;
+        }
+
+        _questionRepository.Delete(question);
+        await CommitChanges();
+    }
+
     public async Task<PaginationDto<QuestionDto>> Search(SearchQuestionDto dto)
     {
         var result = await _questionRepository.Search(dto.Statement, dto.Difficulty, dto.TopicId,

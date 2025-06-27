@@ -6,6 +6,7 @@ public interface IAlternativeRepository : IRepository<Alternative>
 {
     void Add(Alternative alternative);
     void Update(Alternative alternative);
+    void Delete(Alternative alternative);
     Task<IPagination<Alternative>> Search(string? text, bool? isCorrect, int? questionId, int numberOfItemsPerPage = 10,
         int currentPage = 1);
     Task<Alternative?> GetById(int id);

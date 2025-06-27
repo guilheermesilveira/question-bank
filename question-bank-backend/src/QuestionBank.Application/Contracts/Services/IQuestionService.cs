@@ -7,6 +7,7 @@ public interface IQuestionService
 {
     Task<QuestionDto?> Add(AddQuestionDto dto);
     Task<QuestionDto?> Update(int id, UpdateQuestionDto dto);
+    Task Delete(int id);
     Task<PaginationDto<QuestionDto>> Search(SearchQuestionDto dto);
     Task<QuestionDto?> GetById(int id);
     Task<List<QuestionDto>> GetAll();

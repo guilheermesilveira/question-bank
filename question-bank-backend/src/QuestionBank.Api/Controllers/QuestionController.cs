@@ -40,6 +40,17 @@ public class QuestionController : BaseController
         var question = await _questionService.Update(id, dto);
         return OkResponse(question);
     }
+    
+    [HttpDelete("{id}")]
+    [SwaggerOperation(Summary = "Delete a question", Tags = new[] { "Questions" })]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> Delete(int id)
+    {
+        await _questionService.Delete(id);
+        return NoContentResponse();
+    }
 
     [HttpGet("search")]
     [SwaggerOperation(Summary = "Search by questions", Tags = new[] { "Questions" })]

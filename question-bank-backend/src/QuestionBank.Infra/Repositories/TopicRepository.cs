@@ -23,6 +23,11 @@ public class TopicRepository : Repository<Topic>, ITopicRepository
         Context.Topics.Update(topic);
     }
 
+    public void Delete(Topic topic)
+    {
+        Context.Topics.Remove(topic);
+    }
+
     public async Task<IPagination<Topic>> Search(string? name, int numberOfItemsPerPage = 10, int currentPage = 1)
     {
         var query = Context.Topics

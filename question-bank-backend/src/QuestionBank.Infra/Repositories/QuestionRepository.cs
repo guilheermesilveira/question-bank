@@ -24,6 +24,11 @@ public class QuestionRepository : Repository<Question>, IQuestionRepository
         Context.Questions.Update(question);
     }
 
+    public void Delete(Question question)
+    {
+        Context.Questions.Remove(question);
+    }
+
     public async Task<IPagination<Question>> Search(
         string? statement,
         EDifficultyLevel? difficulty,
@@ -40,7 +45,7 @@ public class QuestionRepository : Repository<Question>, IQuestionRepository
 
         if (difficulty.HasValue)
             query = query.Where(q => q.Difficulty.Equals(difficulty));
-        
+
         if (topicId.HasValue)
             query = query.Where(q => q.TopicId == topicId);
 

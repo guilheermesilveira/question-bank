@@ -7,6 +7,7 @@ public interface IAlternativeService
 {
     Task<AlternativeDto?> Add(AddAlternativeDto dto);
     Task<AlternativeDto?> Update(int id, UpdateAlternativeDto dto);
+    Task Delete(int id);
     Task<PaginationDto<AlternativeDto>> Search(SearchAlternativeDto dto);
     Task<AlternativeDto?> GetById(int id);
     Task<List<AlternativeDto>> GetAll();
