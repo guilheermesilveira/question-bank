@@ -145,4 +145,14 @@ export class QuestionComponent {
       }
     });
   }
+
+  translateDifficulty(difficulty: EDifficultyLevel): string {
+    if (difficulty === 'Easy') {
+      return 'Fácil';
+    } else if (difficulty === 'Medium') {
+      return 'Médio';
+    } else {
+      return 'Difícil';
+    }
+  }
 }

@@ -54,7 +54,7 @@
       <tr *ngFor="let question of questions">
         <td>{{ question.id }}</td>
         <td>{{ question.statement }}</td>
-        <td>{{ question.difficulty }}</td>
+        <td>{{ translateDifficulty(question.difficulty) }}</td>
         <td>{{ topicNames[question.topicId] || 'Carregando...' }}</td>
         <td>
           <button class="btn btn-sm btn-primary me-2" (click)="editQuestion(question)">Editar</button>
