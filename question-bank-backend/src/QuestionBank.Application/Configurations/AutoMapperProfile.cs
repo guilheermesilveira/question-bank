@@ -41,7 +41,8 @@ public class AutoMapperProfile : Profile
 
         CreateMap<AddQuestionDto, Question>();
         CreateMap<UpdateQuestionDto, Question>();
-        CreateMap<Question, QuestionDto>();
+        CreateMap<Question, QuestionDto>()
+            .ForMember(dest => dest.Difficulty, opt => opt.MapFrom(src => src.Difficulty.ToString()));
 
         #endregion
 
