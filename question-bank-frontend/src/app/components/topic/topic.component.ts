@@ -61,7 +61,13 @@ export class TopicComponent implements OnInit {
             this.resetForm();
             this.loadTopics();
           },
-          error: () => this.errorMessage = 'Erro ao cadastrar tópico. Tente novamente.'
+          error: err => {
+            if (err.error.status === 400) {
+              this.errorMessage = 'Erro ao cadastrar tópico: Já existe um tópico com esse nome. Tente novamente.';
+            } else {
+              this.errorMessage = 'Erro ao cadastrar tópico. Tente novamente.';
+            }
+          }
         });
       }
     }

@@ -69,7 +69,13 @@ export class UserComponent implements OnInit {
             this.resetForm();
             this.loadUsers();
           },
-          error: () => this.errorMessage = 'Erro ao cadastrar usuário. Tente novamente.'
+          error: err => {
+            if (err.error.status === 400) {
+              this.errorMessage = 'Erro ao cadastrar usuário: Já existe um usuário utilizando o e-mail informado. Tente novamente.';
+            } else {
+              this.errorMessage = 'Erro ao cadastrar usuário. Tente novamente.';
+            }
+          }
         });
       }
     }
