@@ -1,1 +1,39 @@
-<p>topic works!</p>
+<div class="container mt-4">
+  <h3 class="mb-3">{{ isEditing ? 'Editar Tópico' : 'Cadastrar Tópico' }}</h3>
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+  <form [formGroup]="formGroup" (ngSubmit)="onSubmitForm()" class="mb-4">
+    <div class="mb-3">
+      <input type="text" formControlName="name" class="form-control" placeholder="Nome do tópico">
+      <div *ngIf="formGroup.get('name')?.hasError('required') && formGroup.get('name')?.touched" class="text-danger">
+        Nome é obrigatório
+      </div>
+    </div>
+    <button type="submit" class="btn btn-success" [disabled]="formGroup.invalid">
+      {{ isEditing ? 'Atualizar' : 'Cadastrar' }}
+    </button>
+    <button *ngIf="isEditing" type="button" class="btn btn-secondary ms-2" (click)="resetForm()">
+      Cancelar
+    </button>
+  </form>
+  <table class="table table-bordered table-striped">
+    <thead class="table-light">
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let topic of topics">
+        <td>{{ topic.id }}</td>
+        <td>{{ topic.name }}</td>
+        <td>
+          <button class="btn btn-sm btn-primary me-2" (click)="editTopic(topic)">Editar</button>
+          <button class="btn btn-sm btn-danger" (click)="deleteTopic(topic.id)">Excluir</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

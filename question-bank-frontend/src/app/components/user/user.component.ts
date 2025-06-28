@@ -12,8 +12,8 @@ export class UserComponent implements OnInit {
 
   formGroup!: FormGroup;
   isEditing: boolean = false;
-  userIdEdited!: number;
   users: User[] = [];
+  userIdEdited!: number;
   errorMessage: string | null = null;
 
   constructor(
