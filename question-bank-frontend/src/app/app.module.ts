@@ -10,6 +10,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { LayoutComponent } from './components/layout/layout.component';
 import { UserComponent } from './components/user/user.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { QuestionComponent } from './components/question/question.component';
+import { TopicComponent } from './components/topic/topic.component';
+import { AlternativeComponent } from './components/alternative/alternative.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +20,10 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     LoginComponent,
     LayoutComponent,
     UserComponent,
-    DashboardComponent
+    DashboardComponent,
+    QuestionComponent,
+    TopicComponent,
+    AlternativeComponent
   ],
   imports: [
     BrowserModule,

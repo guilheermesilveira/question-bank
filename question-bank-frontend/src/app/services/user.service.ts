@@ -29,11 +29,11 @@ export class UserService {
     let params = new HttpParams();
 
     if (user.name) {
-      params = params.set('name', user.name);
+      params = params.set('Name', user.name);
     }
 
     if (user.email) {
-      params = params.set('email', user.email);
+      params = params.set('Email', user.email);
     }
 
     return this.http.get<Pagination<User>>(`${this.api}/search`, { params });

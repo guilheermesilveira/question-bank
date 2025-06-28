@@ -5,6 +5,9 @@ import { authGuard } from './guards/auth.guard';
 import { LayoutComponent } from './components/layout/layout.component';
 import { UserComponent } from './components/user/user.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { QuestionComponent } from './components/question/question.component';
+import { TopicComponent } from './components/topic/topic.component';
+import { AlternativeComponent } from './components/alternative/alternative.component';
 
 const routes: Routes = [
   {
@@ -23,6 +26,18 @@ const routes: Routes = [
       {
         path: 'users',
         component: UserComponent
+      },
+      {
+        path: 'topics',
+        component: TopicComponent
+      },
+      {
+        path: 'questions',
+        component: QuestionComponent
+      },
+      {
+        path: 'alternatives',
+        component: AlternativeComponent
       }
     ]
   }
