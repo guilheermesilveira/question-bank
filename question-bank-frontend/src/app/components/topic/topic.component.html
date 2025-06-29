@@ -31,7 +31,9 @@
     <tbody>
       <tr *ngFor="let topic of topics">
         <td>{{ topic.id }}</td>
-        <td>{{ topic.name }}</td>
+        <td [title]="topic.name">
+          {{ topic.name.length > 50 ? (topic.name | slice:0:50) + '...' : topic.name }}
+        </td>
         <td>
           <button class="btn btn-sm btn-primary me-2" (click)="editTopic(topic)">Editar</button>
           <button class="btn btn-sm btn-danger" (click)="deleteTopic(topic.id)">Excluir</button>

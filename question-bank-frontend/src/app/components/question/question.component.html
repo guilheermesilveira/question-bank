@@ -53,9 +53,14 @@
     <tbody>
       <tr *ngFor="let question of questions">
         <td>{{ question.id }}</td>
-        <td>{{ question.statement }}</td>
+        <td [title]="question.statement">
+          {{ question.statement.length > 50 ? (question.statement | slice:0:50) + '...' : question.statement }}
+        </td>
         <td>{{ translateDifficulty(question.difficulty) }}</td>
-        <td>{{ topicNames[question.topicId] || 'Carregando...' }}</td>
+        <td [title]="topicNames[question.topicId]">
+          {{ topicNames[question.topicId] ? (topicNames[question.topicId].length > 50 ?
+          (topicNames[question.topicId] | slice:0:50) + '...' : topicNames[question.topicId]) : 'Carregando...' }}
+        </td>
         <td>
           <button class="btn btn-sm btn-primary me-2" (click)="editQuestion(question)">Editar</button>
           <button class="btn btn-sm btn-danger" (click)="deleteQuestion(question.id)">Excluir</button>

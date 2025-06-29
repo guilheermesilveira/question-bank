@@ -51,9 +51,15 @@
     <tbody>
       <tr *ngFor="let alternative of alternatives">
         <td>{{ alternative.id }}</td>
-        <td>{{ alternative.text }}</td>
+        <td [title]="alternative.text">
+          {{ alternative.text.length > 50 ? (alternative.text | slice:0:50) + '...' : alternative.text }}
+        </td>
         <td>{{ translateIsCorrect(alternative.isCorrect) }}</td>
-        <td>{{ questionStatements[alternative.questionId] || 'Carregando...' }}</td>
+        <td [title]="questionStatements[alternative.questionId]">
+          {{ questionStatements[alternative.questionId] ? (questionStatements[alternative.questionId].length > 50 ?
+          (questionStatements[alternative.questionId] | slice:0:50) + '...' :
+          questionStatements[alternative.questionId]) : 'Carregando...' }}
+        </td>
         <td>
           <button class="btn btn-sm btn-primary me-2" (click)="editAlternative(alternative)">Editar</button>
           <button class="btn btn-sm btn-danger" (click)="deleteAlternative(alternative.id)">Excluir</button>
