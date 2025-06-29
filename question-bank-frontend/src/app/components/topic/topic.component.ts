@@ -34,7 +34,7 @@ export class TopicComponent implements OnInit {
 
   onSubmitForm(): void {
     if (this.formGroup.valid) {
-      const name = this.formGroup.get('name')?.value;
+      const name = this.formGroup.get('name')?.value.trim();
 
       if (this.isEditing) {
         const topic: UpdateTopic = {
