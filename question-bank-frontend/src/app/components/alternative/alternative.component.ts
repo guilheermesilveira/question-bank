@@ -60,7 +60,17 @@ export class AlternativeComponent implements OnInit {
             this.resetForm();
             this.loadAlternatives();
           },
-          error: () => this.errorMessage = 'Erro ao atualizar alternativa. Tente novamente.'
+          error: err => {
+            const serverError = err.error.errors?.[0];
+
+            if (serverError?.includes('five')) {
+              this.errorMessage = 'Erro ao atualizar alternativa: A questão selecionada já possui 5 alternativas.';
+            } else if (serverError?.includes('correct')) {
+              this.errorMessage = 'Erro ao atualizar alternativa: A questão selecionada já possui uma alternativa marcada como correta.';
+            } else {
+              this.errorMessage = 'Erro ao atualizar alternativa. Tente novamente.';
+            }
+          }
         });
       } else {
         const alternative: AddAlternative = {

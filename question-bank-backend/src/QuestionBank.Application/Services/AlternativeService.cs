@@ -161,6 +161,31 @@ public class AlternativeService : BaseService, IAlternativeService
             return false;
         }
 
+        if (alternativeExist.QuestionId != dto.QuestionId)
+        {
+            var alternativesFromAnotherQuestion = await _alternativeRepository.Search(null, null, dto.QuestionId);
+            if (alternativesFromAnotherQuestion.Items.Count == 5)
+            {
+                Notificator.Handle("This question already has five alternatives");
+                return false;
+            }
+
+            if (dto.IsCorrect && alternativesFromAnotherQuestion.Items.Any(a => a.IsCorrect))
+            {
+                Notificator.Handle("There is already an alternative marked as correct for this question");
+                return false;
+            }
+        }
+        else
+        {
+            var alternatives = await _alternativeRepository.Search(null, null, alternativeExist.QuestionId);
+            if (dto.IsCorrect && alternatives.Items.Any(a => a.IsCorrect && a.Id != id))
+            {
+                Notificator.Handle("There is already an alternative marked as correct for this question");
+                return false;
+            }
+        }
+
         return true;
     }
 
