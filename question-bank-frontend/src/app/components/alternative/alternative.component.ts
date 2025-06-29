@@ -69,8 +69,6 @@ export class AlternativeComponent implements OnInit {
           questionId: questionId
         }
 
-        this.alternatives.length;
-
         this.alternativeService.add(alternative).subscribe({
           next: () => {
             this.errorMessage = null;

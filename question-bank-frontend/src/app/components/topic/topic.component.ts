@@ -34,7 +34,7 @@ export class TopicComponent implements OnInit {
 
   onSubmitForm(): void {
     if (this.formGroup.valid) {
-      const name = String(this.formGroup.get('name')?.value);
+      const name = this.formGroup.get('name')?.value;
 
       if (this.isEditing) {
         const topic: UpdateTopic = {
@@ -62,8 +62,10 @@ export class TopicComponent implements OnInit {
             this.loadTopics();
           },
           error: err => {
-            if (err.error.status === 400) {
-              this.errorMessage = 'Erro ao cadastrar tópico: Já existe um tópico com esse nome. Tente novamente.';
+            const serverError = err.error.errors?.[0];
+
+            if (serverError?.includes('Name')) {
+              this.errorMessage = 'Erro ao cadastrar tópico: Já existe um tópico cadastrado com esse nome.';
             } else {
               this.errorMessage = 'Erro ao cadastrar tópico. Tente novamente.';
             }

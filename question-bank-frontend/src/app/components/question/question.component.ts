@@ -42,18 +42,9 @@ export class QuestionComponent implements OnInit {
 
   onSubmitForm(): void {
     if (this.formGroup.valid) {
-      const statement = String(this.formGroup.get('statement')?.value);
-
-      let difficulty: EDifficultyLevel;
-      if (this.formGroup.get('difficulty')?.value === 'Easy') {
-        difficulty = EDifficultyLevel.Easy;
-      } else if (this.formGroup.get('difficulty')?.value === 'Medium') {
-        difficulty = EDifficultyLevel.Medium;
-      } else {
-        difficulty = EDifficultyLevel.Hard;
-      }
-
-      const topicId = Number(this.formGroup.get('topicId')?.value);
+      const statement = this.formGroup.get('statement')?.value;
+      const difficulty = this.formGroup.get('difficulty')?.value;
+      const topicId = this.formGroup.get('topicId')?.value;
 
       if (this.isEditing) {
         const question: UpdateQuestion = {

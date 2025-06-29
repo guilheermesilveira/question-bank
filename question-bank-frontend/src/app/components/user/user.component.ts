@@ -36,9 +36,9 @@ export class UserComponent implements OnInit {
 
   onSubmitForm(): void {
     if (this.formGroup.valid) {
-      const name = String(this.formGroup.get('name')?.value);
-      const email = String(this.formGroup.get('email')?.value);
-      const password = String(this.formGroup.get('password')?.value);
+      const name = this.formGroup.get('name')?.value;
+      const email = this.formGroup.get('email')?.value;
+      const password = this.formGroup.get('password')?.value;
 
       if (this.isEditing) {
         const user: UpdateUser = {
@@ -70,8 +70,10 @@ export class UserComponent implements OnInit {
             this.loadUsers();
           },
           error: err => {
-            if (err.error.status === 400) {
-              this.errorMessage = 'Erro ao cadastrar usuário: Já existe um usuário utilizando o e-mail informado. Tente novamente.';
+            const serverError = err.error.errors?.[0];
+
+            if (serverError?.includes('Email')) {
+              this.errorMessage = 'Erro ao cadastrar usuário: Já existe um usuário utilizando o e-mail informado.';
             } else {
               this.errorMessage = 'Erro ao cadastrar usuário. Tente novamente.';
             }

@@ -14,7 +14,7 @@ export class LoginComponent {
   credentialsValid: boolean = true;
 
   constructor(
-    private service: LoginService,
+    private loginService: LoginService,
     private formBuilder: FormBuilder,
     private router: Router
   ) {
@@ -28,11 +28,12 @@ export class LoginComponent {
     });
   }
 
-  onSubmit(): void {
+  onSubmitForm(): void {
     if (this.formGroup.valid) {
-      const email = String(this.formGroup.get('email')?.value);
-      const password = String(this.formGroup.get('password')?.value);
-      this.service.login(email, password).subscribe({
+      const email = this.formGroup.get('email')?.value;
+      const password = this.formGroup.get('password')?.value;
+
+      this.loginService.login(email, password).subscribe({
         next: () => {
           this.credentialsValid = true;
           this.router.navigate(['/dashboard']);

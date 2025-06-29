@@ -1,7 +1,7 @@
 <div class="d-flex justify-content-center align-items-center vh-100 bg-light">
   <div class="card shadow-lg p-4" style="width: 100%; max-width: 400px;">
     <h4 class="text-center mb-4">Login</h4>
-    <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+    <form [formGroup]="formGroup" (ngSubmit)="onSubmitForm()">
       <div class="mb-3">
         <label for="email" class="form-label">E-mail</label>
         <input type="email" formControlName="email" class="form-control" placeholder="Digite seu e-mail" id="email">
