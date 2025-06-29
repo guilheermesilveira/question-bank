@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AddQuestion, EDifficultyLevel, Question, UpdateQuestion } from 'src/app/models/question.model';
 import { Topic } from 'src/app/models/topic.model';
@@ -10,7 +10,7 @@ import { TopicService } from 'src/app/services/topic.service';
   templateUrl: './question.component.html',
   styleUrls: ['./question.component.css']
 })
-export class QuestionComponent {
+export class QuestionComponent implements OnInit {
 
   formGroup!: FormGroup;
   isEditing: boolean = false;

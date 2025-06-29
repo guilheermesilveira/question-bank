@@ -1,1 +1,64 @@
-<p>alternative works!</p>
+<div class="container mt-4">
+  <h3 class="mb-3">{{ isEditing ? 'Editar Alternativa' : 'Cadastrar Alternativa' }}</h3>
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+  <form [formGroup]="formGroup" (ngSubmit)="onSubmitForm()" class="mb-4">
+    <div class="mb-3">
+      <input type="text" formControlName="text" class="form-control" placeholder="Texto">
+      <div *ngIf="formGroup.get('text')?.hasError('required') && formGroup.get('text')?.touched" class="text-danger">
+        Texto é obrigatório
+      </div>
+    </div>
+    <div class="mb-3">
+      <select formControlName="isCorrect" class="form-select">
+        <option value="" disabled selected>Selecione se a alternativa está correta ou não</option>
+        <option [value]="true">Verdadeiro</option>
+        <option [value]="false">Falso</option>
+      </select>
+      <div *ngIf="formGroup.get('isCorrect')?.hasError('required') && formGroup.get('isCorrect')?.touched"
+        class="text-danger">
+        Campo obrigatório
+      </div>
+    </div>
+    <div class="mb-3">
+      <select formControlName="questionId" class="form-select">
+        <option value="" disabled selected>Selecione a questão que essa alternativa faz parte</option>
+        <option *ngFor="let question of questions" [value]="question.id">{{ question.statement }}</option>
+      </select>
+      <div *ngIf="formGroup.get('questionId')?.hasError('required') && formGroup.get('questionId')?.touched"
+        class="text-danger">
+        Questão é obrigatório
+      </div>
+    </div>
+    <button type="submit" class="btn btn-success" [disabled]="formGroup.invalid">
+      {{ isEditing ? 'Atualizar' : 'Cadastrar' }}
+    </button>
+    <button *ngIf="isEditing" type="button" class="btn btn-secondary ms-2" (click)="resetForm()">
+      Cancelar
+    </button>
+  </form>
+  <table class="table table-bordered table-striped">
+    <thead class="table-light">
+      <tr>
+        <th>ID</th>
+        <th>Texto</th>
+        <th>Está correta</th>
+        <th>Questão</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let alternative of alternatives">
+        <td>{{ alternative.id }}</td>
+        <td>{{ alternative.text }}</td>
+        <td>{{ translateIsCorrect(alternative.isCorrect) }}</td>
+        <td>{{ questionStatements[alternative.questionId] || 'Carregando...' }}</td>
+        <td>
+          <button class="btn btn-sm btn-primary me-2" (click)="editAlternative(alternative)">Editar</button>
+          <button class="btn btn-sm btn-danger" (click)="deleteAlternative(alternative.id)">Excluir</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
