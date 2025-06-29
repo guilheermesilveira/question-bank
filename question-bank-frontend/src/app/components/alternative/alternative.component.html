@@ -5,7 +5,7 @@
   </div>
   <form [formGroup]="formGroup" (ngSubmit)="onSubmitForm()" class="mb-4">
     <div class="mb-3">
-      <input type="text" formControlName="text" class="form-control" placeholder="Texto">
+      <textarea formControlName="text" class="form-control" placeholder="Texto"></textarea>
       <div *ngIf="formGroup.get('text')?.hasError('required') && formGroup.get('text')?.touched" class="text-danger">
         Texto é obrigatório
       </div>

@@ -5,7 +5,7 @@
   </div>
   <form [formGroup]="formGroup" (ngSubmit)="onSubmitForm()" class="mb-4">
     <div class="mb-3">
-      <input type="text" formControlName="statement" class="form-control" placeholder="Enunciado">
+      <textarea formControlName="statement" class="form-control" placeholder="Enunciado"></textarea>
       <div *ngIf="formGroup.get('statement')?.hasError('required') && formGroup.get('statement')?.touched"
         class="text-danger">
         Enunciado é obrigatório
