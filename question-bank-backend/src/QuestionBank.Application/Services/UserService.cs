@@ -145,6 +145,16 @@ public class UserService : BaseService, IUserService
             return false;
         }
 
+        if (userExist.Email != dto.Email)
+        {
+            var emailExist = await _userRepository.FirstOrDefault(u => u.Email == dto.Email);
+            if (emailExist != null)
+            {
+                Notificator.Handle("Email already used by another user");
+                return false;
+            }
+        }
+
         return true;
     }
 

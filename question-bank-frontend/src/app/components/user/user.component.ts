@@ -54,7 +54,15 @@ export class UserComponent implements OnInit {
             this.resetForm();
             this.loadUsers();
           },
-          error: () => this.errorMessage = 'Erro ao atualizar usuário. Tente novamente.'
+          error: err => {
+            const serverError = err.error.errors?.[0];
+
+            if (serverError?.includes('Email')) {
+              this.errorMessage = 'Erro ao atualizar usuário: Já existe um usuário utilizando o e-mail informado.';
+            } else {
+              this.errorMessage = 'Erro ao atualizar usuário. Tente novamente.';
+            }
+          }
         });
       } else {
         const user: AddUser = {

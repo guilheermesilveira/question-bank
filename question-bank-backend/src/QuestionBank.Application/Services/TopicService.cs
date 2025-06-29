@@ -135,6 +135,16 @@ public class TopicService : BaseService, ITopicService
             return false;
         }
 
+        if (topicExist.Name != dto.Name)
+        {
+            var nameExist = await _topicRepository.FirstOrDefault(t => t.Name == dto.Name);
+            if (nameExist != null)
+            {
+                Notificator.Handle("Name already exists");
+                return false;
+            }
+        }
+
         return true;
     }
 

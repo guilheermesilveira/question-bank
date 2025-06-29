@@ -28,7 +28,7 @@ export class TopicComponent implements OnInit {
 
   initForm(): void {
     this.formGroup = this.formBuilder.group({
-      name: ['', [Validators.required]]
+      name: ['', [Validators.required, Validators.maxLength(100)]]
     });
   }
 
@@ -48,7 +48,15 @@ export class TopicComponent implements OnInit {
             this.resetForm();
             this.loadTopics();
           },
-          error: () => this.errorMessage = 'Erro ao atualizar tópico. Tente novamente.'
+          error: err => {
+            const serverError = err.error.errors?.[0];
+
+            if (serverError?.includes('Name')) {
+              this.errorMessage = 'Erro ao atualizar tópico: Já existe um tópico cadastrado com esse nome.';
+            } else {
+              this.errorMessage = 'Erro ao atualizar tópico. Tente novamente.';
+            }
+          }
         });
       } else {
         const topic: AddTopic = {
