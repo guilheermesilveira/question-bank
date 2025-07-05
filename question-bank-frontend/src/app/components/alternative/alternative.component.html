@@ -1,70 +1,102 @@
 <div class="container mt-4">
-  <h3 class="mb-3">{{ isEditing ? 'Editar Alternativa' : 'Cadastrar Alternativa' }}</h3>
-  <div *ngIf="errorMessage" class="alert alert-danger">
-    {{ errorMessage }}
+  <div class="card shadow-sm border-0 mb-4">
+    <div class="card-body">
+      <h4 class="card-title fw-bold text-primary mb-4">
+        <i class="bi bi-ui-checks-grid me-2"></i>{{ isEditing ? 'Editar Alternativa' : 'Cadastrar Alternativa' }}
+      </h4>
+
+      <div *ngIf="errorMessage" class="alert alert-danger">
+        {{ errorMessage }}
+      </div>
+
+      <form [formGroup]="formGroup" (ngSubmit)="onSubmitForm()">
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Texto</label>
+          <textarea formControlName="text" class="form-control" rows="3"
+            placeholder="Digite o texto da alternativa"></textarea>
+          <div *ngIf="formGroup.get('text')?.touched && formGroup.get('text')?.hasError('required')"
+            class="text-danger mt-1 small">
+            Texto é obrigatório
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Está correta?</label>
+          <select formControlName="isCorrect" class="form-select">
+            <option value="" disabled selected>Selecione se a alternativa está correta ou não</option>
+            <option [value]="true">Verdadeiro</option>
+            <option [value]="false">Falso</option>
+          </select>
+          <div *ngIf="formGroup.get('isCorrect')?.touched && formGroup.get('isCorrect')?.hasError('required')"
+            class="text-danger mt-1 small">
+            Campo obrigatório
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Questão relacionada</label>
+          <select formControlName="questionId" class="form-select">
+            <option value="" disabled selected>Selecione a questão que essa alternativa faz parte</option>
+            <option *ngFor="let question of questions" [value]="question.id">
+              {{ question.statement.length > 50 ? (question.statement | slice:0:50) + '...' : question.statement }}
+            </option>
+          </select>
+          <div *ngIf="formGroup.get('questionId')?.touched && formGroup.get('questionId')?.hasError('required')"
+            class="text-danger mt-1 small">
+            Questão é obrigatória
+          </div>
+        </div>
+
+        <div class="d-flex">
+          <button type="submit" class="btn btn-success" [disabled]="formGroup.invalid">
+            <i class="bi bi-check-circle me-1"></i>{{ isEditing ? 'Atualizar' : 'Cadastrar' }}
+          </button>
+          <button *ngIf="isEditing" type="button" class="btn btn-outline-secondary ms-2" (click)="resetForm()">
+            <i class="bi bi-x-circle me-1"></i>Cancelar
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
-  <form [formGroup]="formGroup" (ngSubmit)="onSubmitForm()" class="mb-4">
-    <div class="mb-3">
-      <textarea formControlName="text" class="form-control" placeholder="Texto"></textarea>
-      <div *ngIf="formGroup.get('text')?.hasError('required') && formGroup.get('text')?.touched" class="text-danger">
-        Texto é obrigatório
-      </div>
+
+  <div class="card shadow-sm border-0">
+    <div class="card-header bg-white">
+      <h5 class="mb-0 fw-semibold"><i class="bi bi-list-check me-2"></i>Lista de Alternativas</h5>
     </div>
-    <div class="mb-3">
-      <select formControlName="isCorrect" class="form-select">
-        <option value="" disabled selected>Selecione se a alternativa está correta ou não</option>
-        <option [value]="true">Verdadeiro</option>
-        <option [value]="false">Falso</option>
-      </select>
-      <div *ngIf="formGroup.get('isCorrect')?.hasError('required') && formGroup.get('isCorrect')?.touched"
-        class="text-danger">
-        Campo obrigatório
-      </div>
+    <div class="card-body p-0">
+      <table class="table table-hover table-striped mb-0">
+        <thead class="table-light">
+          <tr>
+            <th>ID</th>
+            <th>Texto</th>
+            <th>Está correta</th>
+            <th>Questão</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let alternative of alternatives">
+            <td>{{ alternative.id }}</td>
+            <td [title]="alternative.text">
+              {{ alternative.text.length > 50 ? (alternative.text | slice:0:50) + '...' : alternative.text }}
+            </td>
+            <td>{{ translateIsCorrect(alternative.isCorrect) }}</td>
+            <td [title]="questionStatements[alternative.questionId]">
+              {{ questionStatements[alternative.questionId] ? (questionStatements[alternative.questionId].length > 50 ?
+              (questionStatements[alternative.questionId] | slice:0:50) + '...' :
+              questionStatements[alternative.questionId]) : 'Carregando...' }}
+            </td>
+            <td>
+              <button class="btn btn-sm btn-outline-primary me-2" (click)="editAlternative(alternative)">
+                <i class="bi bi-pencil-square"></i>
+              </button>
+              <button class="btn btn-sm btn-outline-danger" (click)="deleteAlternative(alternative.id)">
+                <i class="bi bi-trash"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-    <div class="mb-3">
-      <select formControlName="questionId" class="form-select">
-        <option value="" disabled selected>Selecione a questão que essa alternativa faz parte</option>
-        <option *ngFor="let question of questions" [value]="question.id">{{ question.statement }}</option>
-      </select>
-      <div *ngIf="formGroup.get('questionId')?.hasError('required') && formGroup.get('questionId')?.touched"
-        class="text-danger">
-        Questão é obrigatório
-      </div>
-    </div>
-    <button type="submit" class="btn btn-success" [disabled]="formGroup.invalid">
-      {{ isEditing ? 'Atualizar' : 'Cadastrar' }}
-    </button>
-    <button *ngIf="isEditing" type="button" class="btn btn-secondary ms-2" (click)="resetForm()">
-      Cancelar
-    </button>
-  </form>
-  <table class="table table-bordered table-striped">
-    <thead class="table-light">
-      <tr>
-        <th>ID</th>
-        <th>Texto</th>
-        <th>Está correta</th>
-        <th>Questão</th>
-        <th>Ações</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let alternative of alternatives">
-        <td>{{ alternative.id }}</td>
-        <td [title]="alternative.text">
-          {{ alternative.text.length > 50 ? (alternative.text | slice:0:50) + '...' : alternative.text }}
-        </td>
-        <td>{{ translateIsCorrect(alternative.isCorrect) }}</td>
-        <td [title]="questionStatements[alternative.questionId]">
-          {{ questionStatements[alternative.questionId] ? (questionStatements[alternative.questionId].length > 50 ?
-          (questionStatements[alternative.questionId] | slice:0:50) + '...' :
-          questionStatements[alternative.questionId]) : 'Carregando...' }}
-        </td>
-        <td>
-          <button class="btn btn-sm btn-primary me-2" (click)="editAlternative(alternative)">Editar</button>
-          <button class="btn btn-sm btn-danger" (click)="deleteAlternative(alternative.id)">Excluir</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  </div>
 </div>

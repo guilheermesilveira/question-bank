@@ -1,71 +1,100 @@
 <div class="container mt-4">
-  <h3 class="mb-3">{{ isEditing ? 'Editar Questão' : 'Cadastrar Questão' }}</h3>
-  <div *ngIf="errorMessage" class="alert alert-danger">
-    {{ errorMessage }}
+  <div class="card shadow-sm border-0 mb-4">
+    <div class="card-body">
+      <h4 class="card-title fw-bold text-primary mb-4">
+        <i class="bi bi-patch-question me-2"></i>{{ isEditing ? 'Editar Questão' : 'Cadastrar Questão' }}
+      </h4>
+
+      <div *ngIf="errorMessage" class="alert alert-danger">
+        {{ errorMessage }}
+      </div>
+
+      <form [formGroup]="formGroup" (ngSubmit)="onSubmitForm()">
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Enunciado</label>
+          <textarea formControlName="statement" class="form-control" placeholder="Digite o enunciado da questão"
+            rows="4"></textarea>
+          <div *ngIf="formGroup.get('statement')?.touched && formGroup.get('statement')?.hasError('required')"
+            class="text-danger mt-1 small">
+            Enunciado é obrigatório
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Dificuldade</label>
+          <select formControlName="difficulty" class="form-select">
+            <option value="" disabled selected>Selecione a dificuldade</option>
+            <option value="Easy">Fácil</option>
+            <option value="Medium">Médio</option>
+            <option value="Hard">Difícil</option>
+          </select>
+          <div *ngIf="formGroup.get('difficulty')?.touched && formGroup.get('difficulty')?.hasError('required')"
+            class="text-danger mt-1 small">
+            Dificuldade é obrigatória
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Tópico</label>
+          <select formControlName="topicId" class="form-select">
+            <option value="" disabled selected>Selecione o tópico que essa questão faz parte</option>
+            <option *ngFor="let topic of topics" [value]="topic.id">{{ topic.name }}</option>
+          </select>
+          <div *ngIf="formGroup.get('topicId')?.touched && formGroup.get('topicId')?.hasError('required')"
+            class="text-danger mt-1 small">
+            Tópico é obrigatório
+          </div>
+        </div>
+
+        <div class="d-flex">
+          <button type="submit" class="btn btn-success" [disabled]="formGroup.invalid">
+            <i class="bi bi-check-circle me-1"></i>{{ isEditing ? 'Atualizar' : 'Cadastrar' }}
+          </button>
+          <button *ngIf="isEditing" type="button" class="btn btn-outline-secondary ms-2" (click)="resetForm()">
+            <i class="bi bi-x-circle me-1"></i>Cancelar
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
-  <form [formGroup]="formGroup" (ngSubmit)="onSubmitForm()" class="mb-4">
-    <div class="mb-3">
-      <textarea formControlName="statement" class="form-control" placeholder="Enunciado"></textarea>
-      <div *ngIf="formGroup.get('statement')?.hasError('required') && formGroup.get('statement')?.touched"
-        class="text-danger">
-        Enunciado é obrigatório
-      </div>
+
+  <div class="card shadow-sm border-0">
+    <div class="card-header bg-white">
+      <h5 class="mb-0 fw-semibold"><i class="bi bi-card-list me-2"></i>Lista de Questões</h5>
     </div>
-    <div class="mb-3">
-      <select formControlName="difficulty" class="form-select">
-        <option value="" disabled selected>Selecione a dificuldade</option>
-        <option value="Easy">Fácil</option>
-        <option value="Medium">Médio</option>
-        <option value="Hard">Difícil</option>
-      </select>
-      <div *ngIf="formGroup.get('difficulty')?.hasError('required') && formGroup.get('difficulty')?.touched"
-        class="text-danger">
-        Dificuldade é obrigatório
-      </div>
+    <div class="card-body p-0">
+      <table class="table table-hover table-striped mb-0">
+        <thead class="table-light">
+          <tr>
+            <th>ID</th>
+            <th>Enunciado</th>
+            <th>Dificuldade</th>
+            <th>Tópico</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let question of questions">
+            <td>{{ question.id }}</td>
+            <td [title]="question.statement">
+              {{ question.statement.length > 50 ? (question.statement | slice:0:50) + '...' : question.statement }}
+            </td>
+            <td>{{ translateDifficulty(question.difficulty) }}</td>
+            <td [title]="topicNames[question.topicId]">
+              {{ topicNames[question.topicId] ? (topicNames[question.topicId].length > 50 ?
+              (topicNames[question.topicId] | slice:0:50) + '...' : topicNames[question.topicId]) : 'Carregando...' }}
+            </td>
+            <td>
+              <button class="btn btn-sm btn-outline-primary me-2" (click)="editQuestion(question)">
+                <i class="bi bi-pencil-square"></i>
+              </button>
+              <button class="btn btn-sm btn-outline-danger" (click)="deleteQuestion(question.id)">
+                <i class="bi bi-trash"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-    <div class="mb-3">
-      <select formControlName="topicId" class="form-select">
-        <option value="" disabled selected>Selecione o tópico que essa questão faz parte</option>
-        <option *ngFor="let topic of topics" [value]="topic.id">{{ topic.name }}</option>
-      </select>
-      <div *ngIf="formGroup.get('topicId')?.hasError('required') && formGroup.get('topicId')?.touched"
-        class="text-danger">
-        Tópico é obrigatório
-      </div>
-    </div>
-    <button type="submit" class="btn btn-success" [disabled]="formGroup.invalid">
-      {{ isEditing ? 'Atualizar' : 'Cadastrar' }}
-    </button>
-    <button *ngIf="isEditing" type="button" class="btn btn-secondary ms-2" (click)="resetForm()">
-      Cancelar
-    </button>
-  </form>
-  <table class="table table-bordered table-striped">
-    <thead class="table-light">
-      <tr>
-        <th>ID</th>
-        <th>Enunciado</th>
-        <th>Dificuldade</th>
-        <th>Tópico</th>
-        <th>Ações</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let question of questions">
-        <td>{{ question.id }}</td>
-        <td [title]="question.statement">
-          {{ question.statement.length > 50 ? (question.statement | slice:0:50) + '...' : question.statement }}
-        </td>
-        <td>{{ translateDifficulty(question.difficulty) }}</td>
-        <td [title]="topicNames[question.topicId]">
-          {{ topicNames[question.topicId] ? (topicNames[question.topicId].length > 50 ?
-          (topicNames[question.topicId] | slice:0:50) + '...' : topicNames[question.topicId]) : 'Carregando...' }}
-        </td>
-        <td>
-          <button class="btn btn-sm btn-primary me-2" (click)="editQuestion(question)">Editar</button>
-          <button class="btn btn-sm btn-danger" (click)="deleteQuestion(question.id)">Excluir</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  </div>
 </div>

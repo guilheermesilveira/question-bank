@@ -1,71 +1,88 @@
 <div class="container mt-4">
-  <h3 class="mb-3">{{ isEditing ? 'Editar Usuário' : 'Cadastrar Usuário' }}</h3>
-  <div *ngIf="errorMessage" class="alert alert-danger">
-    {{ errorMessage }}
+  <div class="card shadow-sm border-0 mb-4">
+    <div class="card-body">
+      <h4 class="card-title fw-bold text-primary mb-4">
+        <i class="bi bi-person-circle me-2"></i>{{ isEditing ? 'Editar Usuário' : 'Cadastrar Usuário' }}
+      </h4>
+
+      <div *ngIf="errorMessage" class="alert alert-danger">
+        {{ errorMessage }}
+      </div>
+
+      <form [formGroup]="formGroup" (ngSubmit)="onSubmitForm()">
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Nome</label>
+          <input type="text" formControlName="name" class="form-control" placeholder="Digite o nome completo">
+          <div *ngIf="formGroup.get('name')?.touched && formGroup.get('name')?.invalid" class="text-danger mt-1 small">
+            <span *ngIf="formGroup.get('name')?.errors?.['required']">Nome é obrigatório</span>
+            <span *ngIf="formGroup.get('name')?.errors?.['minlength']">Mínimo 3 caracteres</span>
+            <span *ngIf="formGroup.get('name')?.errors?.['maxlength']">Máximo 50 caracteres</span>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Email</label>
+          <input type="email" formControlName="email" class="form-control" placeholder="Digite o email">
+          <div *ngIf="formGroup.get('email')?.touched && formGroup.get('email')?.invalid"
+            class="text-danger mt-1 small">
+            <span *ngIf="formGroup.get('email')?.errors?.['required']">Email é obrigatório</span>
+            <span *ngIf="formGroup.get('email')?.errors?.['email']">Email inválido</span>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Senha</label>
+          <input type="password" formControlName="password" class="form-control" placeholder="Digite a senha">
+          <div *ngIf="formGroup.get('password')?.touched && formGroup.get('password')?.invalid"
+            class="text-danger mt-1 small">
+            <span *ngIf="formGroup.get('password')?.errors?.['required']">Senha é obrigatória</span>
+            <span *ngIf="formGroup.get('password')?.errors?.['minlength']">Mínimo 5 caracteres</span>
+            <span *ngIf="formGroup.get('password')?.errors?.['maxlength']">Máximo 15 caracteres</span>
+          </div>
+        </div>
+
+        <div class="d-flex">
+          <button type="submit" class="btn btn-success" [disabled]="formGroup.invalid">
+            <i class="bi bi-check-circle me-1"></i>{{ isEditing ? 'Atualizar' : 'Cadastrar' }}
+          </button>
+          <button *ngIf="isEditing" type="button" class="btn btn-outline-secondary ms-2" (click)="resetForm()">
+            <i class="bi bi-x-circle me-1"></i>Cancelar
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
-  <form [formGroup]="formGroup" (ngSubmit)="onSubmitForm()" class="mb-4">
-    <div class="mb-3">
-      <input type="text" formControlName="name" class="form-control" placeholder="Nome">
-      <div *ngIf="formGroup.get('name')?.hasError('required') && formGroup.get('name')?.touched" class="text-danger">
-        Nome é obrigatório
-      </div>
-      <div *ngIf="formGroup.get('name')?.hasError('minlength') && formGroup.get('name')?.touched" class="text-danger">
-        Nome deve ter no mínimo 3 caracteres
-      </div>
-      <div *ngIf="formGroup.get('name')?.hasError('maxlength') && formGroup.get('name')?.touched" class="text-danger">
-        Nome deve ter no máximo 50 caracteres
-      </div>
+
+  <div class="card shadow-sm border-0">
+    <div class="card-header bg-white">
+      <h5 class="mb-0 fw-semibold"><i class="bi bi-people-fill me-2"></i>Lista de Usuários</h5>
     </div>
-    <div class="mb-3">
-      <input type="email" formControlName="email" class="form-control" placeholder="Email">
-      <div *ngIf="formGroup.get('email')?.hasError('required') && formGroup.get('email')?.touched" class="text-danger">
-        Email é obrigatório
-      </div>
-      <div *ngIf="formGroup.get('email')?.hasError('email') && formGroup.get('email')?.touched" class="text-danger">
-        Email inválido
-      </div>
+    <div class="card-body p-0">
+      <table class="table table-hover table-striped mb-0">
+        <thead class="table-light">
+          <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users">
+            <td>{{ user.id }}</td>
+            <td>{{ user.name }}</td>
+            <td>{{ user.email }}</td>
+            <td>
+              <button class="btn btn-sm btn-outline-primary me-2" (click)="editUser(user)">
+                <i class="bi bi-pencil-square"></i>
+              </button>
+              <button class="btn btn-sm btn-outline-danger" (click)="deleteUser(user.id)">
+                <i class="bi bi-trash"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-    <div class="mb-3">
-      <input type="password" formControlName="password" class="form-control" placeholder="Senha">
-      <div *ngIf="formGroup.get('password')?.hasError('required') && formGroup.get('password')?.touched"
-        class="text-danger">
-        Senha é obrigatório
-      </div>
-      <div *ngIf="formGroup.get('password')?.hasError('minlength') && formGroup.get('password')?.touched"
-        class="text-danger">
-        Senha deve ter no mínimo 5 caracteres
-      </div>
-      <div *ngIf="formGroup.get('password')?.hasError('maxlength') && formGroup.get('password')?.touched"
-        class="text-danger">
-        Senha deve ter no máximo 15 caracteres
-      </div>
-    </div>
-    <button type="submit" class="btn btn-success" [disabled]="formGroup.invalid">
-      {{ isEditing ? 'Atualizar' : 'Cadastrar' }}
-    </button>
-    <button *ngIf="isEditing" type="button" class="btn btn-secondary ms-2" (click)="resetForm()">
-      Cancelar
-    </button>
-  </form>
-  <table class="table table-bordered table-striped">
-    <thead class="table-light">
-      <tr>
-        <th>ID</th>
-        <th>Nome</th>
-        <th>Email</th>
-        <th>Ações</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let user of users">
-        <td>{{ user.id }}</td>
-        <td>{{ user.name }}</td>
-        <td>{{ user.email }}</td>
-        <td>
-          <button class="btn btn-sm btn-primary me-2" (click)="editUser(user)">Editar</button>
-          <button class="btn btn-sm btn-danger" (click)="deleteUser(user.id)">Excluir</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  </div>
 </div>

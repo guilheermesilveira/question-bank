@@ -1,16 +1,36 @@
-<div class="d-flex">
-  <nav class="bg-light p-3 vh-100" style="width: 250px;">
-    <ul class="nav flex-column">
+<div class="d-flex min-vh-100">
+  <nav class="bg-white shadow-sm border-end p-4" style="width: 250px;">
+    <h5 class="text-primary fw-bold mb-4">Painel</h5>
+    <ul class="nav flex-column gap-2">
       <li class="nav-item">
-        <a class="nav-link" routerLink="/dashboard">Dashboard</a>
-        <a class="nav-link" routerLink="/users">Usuários</a>
-        <a class="nav-link" routerLink="/topics">Tópicos</a>
-        <a class="nav-link" routerLink="/questions">Questões</a>
-        <a class="nav-link" routerLink="/alternatives">Alternativas</a>
+        <a class="nav-link text-dark fw-semibold d-flex align-items-center gap-2" routerLink="/dashboard">
+          <i class="bi bi-speedometer2"></i> Dashboard
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-dark fw-semibold d-flex align-items-center gap-2" routerLink="/users">
+          <i class="bi bi-people"></i> Usuários
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-dark fw-semibold d-flex align-items-center gap-2" routerLink="/topics">
+          <i class="bi bi-journal-text"></i> Tópicos
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-dark fw-semibold d-flex align-items-center gap-2" routerLink="/questions">
+          <i class="bi bi-question-circle"></i> Questões
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-dark fw-semibold d-flex align-items-center gap-2" routerLink="/alternatives">
+          <i class="bi bi-list-ol"></i> Alternativas
+        </a>
       </li>
     </ul>
   </nav>
-  <div class="flex-grow-1 p-4">
+
+  <div class="flex-grow-1 bg-light p-4">
     <router-outlet></router-outlet>
   </div>
 </div>

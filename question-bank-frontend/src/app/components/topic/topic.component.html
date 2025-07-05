@@ -1,44 +1,66 @@
 <div class="container mt-4">
-  <h3 class="mb-3">{{ isEditing ? 'Editar Tópico' : 'Cadastrar Tópico' }}</h3>
-  <div *ngIf="errorMessage" class="alert alert-danger">
-    {{ errorMessage }}
-  </div>
-  <form [formGroup]="formGroup" (ngSubmit)="onSubmitForm()" class="mb-4">
-    <div class="mb-3">
-      <input type="text" formControlName="name" class="form-control" placeholder="Nome do tópico">
-      <div *ngIf="formGroup.get('name')?.hasError('required') && formGroup.get('name')?.touched" class="text-danger">
-        Nome é obrigatório
+  <div class="card shadow-sm border-0 mb-4">
+    <div class="card-body">
+      <h4 class="card-title fw-bold text-primary mb-4">
+        <i class="bi bi-journal-text me-2"></i>{{ isEditing ? 'Editar Tópico' : 'Cadastrar Tópico' }}
+      </h4>
+
+      <div *ngIf="errorMessage" class="alert alert-danger">
+        {{ errorMessage }}
       </div>
-      <div *ngIf="formGroup.get('name')?.hasError('maxlength') && formGroup.get('name')?.touched" class="text-danger">
-        Nome deve ter no máximo 100 caracteres
-      </div>
+
+      <form [formGroup]="formGroup" (ngSubmit)="onSubmitForm()">
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Nome do Tópico</label>
+          <input type="text" formControlName="name" class="form-control" placeholder="Digite o nome do tópico">
+          <div *ngIf="formGroup.get('name')?.touched && formGroup.get('name')?.invalid" class="text-danger mt-1 small">
+            <span *ngIf="formGroup.get('name')?.errors?.['required']">Nome é obrigatório</span>
+            <span *ngIf="formGroup.get('name')?.errors?.['maxlength']">Máximo 100 caracteres</span>
+          </div>
+        </div>
+
+        <div class="d-flex">
+          <button type="submit" class="btn btn-success" [disabled]="formGroup.invalid">
+            <i class="bi bi-check-circle me-1"></i>{{ isEditing ? 'Atualizar' : 'Cadastrar' }}
+          </button>
+          <button *ngIf="isEditing" type="button" class="btn btn-outline-secondary ms-2" (click)="resetForm()">
+            <i class="bi bi-x-circle me-1"></i>Cancelar
+          </button>
+        </div>
+      </form>
     </div>
-    <button type="submit" class="btn btn-success" [disabled]="formGroup.invalid">
-      {{ isEditing ? 'Atualizar' : 'Cadastrar' }}
-    </button>
-    <button *ngIf="isEditing" type="button" class="btn btn-secondary ms-2" (click)="resetForm()">
-      Cancelar
-    </button>
-  </form>
-  <table class="table table-bordered table-striped">
-    <thead class="table-light">
-      <tr>
-        <th>ID</th>
-        <th>Nome</th>
-        <th>Ações</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let topic of topics">
-        <td>{{ topic.id }}</td>
-        <td [title]="topic.name">
-          {{ topic.name.length > 50 ? (topic.name | slice:0:50) + '...' : topic.name }}
-        </td>
-        <td>
-          <button class="btn btn-sm btn-primary me-2" (click)="editTopic(topic)">Editar</button>
-          <button class="btn btn-sm btn-danger" (click)="deleteTopic(topic.id)">Excluir</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  </div>
+
+  <div class="card shadow-sm border-0">
+    <div class="card-header bg-white">
+      <h5 class="mb-0 fw-semibold"><i class="bi bi-list-ul me-2"></i>Lista de Tópicos</h5>
+    </div>
+    <div class="card-body p-0">
+      <table class="table table-hover table-striped mb-0">
+        <thead class="table-light">
+          <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let topic of topics">
+            <td>{{ topic.id }}</td>
+            <td [title]="topic.name">
+              {{ topic.name.length > 50 ? (topic.name | slice:0:50) + '...' : topic.name }}
+            </td>
+            <td>
+              <button class="btn btn-sm btn-outline-primary me-2" (click)="editTopic(topic)">
+                <i class="bi bi-pencil-square"></i>
+              </button>
+              <button class="btn btn-sm btn-outline-danger" (click)="deleteTopic(topic.id)">
+                <i class="bi bi-trash"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
