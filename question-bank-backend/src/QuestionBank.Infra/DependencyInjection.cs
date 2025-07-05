@@ -32,7 +32,6 @@ public static class DependencyInjection
     {
         services
             .AddScoped<IUserRepository, UserRepository>()
-            .AddScoped<IUserAnswerRepository, UserAnswerRepository>()
             .AddScoped<ITopicRepository, TopicRepository>()
             .AddScoped<IQuestionRepository, QuestionRepository>()
             .AddScoped<IAlternativeRepository, AlternativeRepository>();

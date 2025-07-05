@@ -4,7 +4,6 @@ using QuestionBank.Application.DTOs.Auth;
 using QuestionBank.Application.DTOs.Question;
 using QuestionBank.Application.DTOs.Topic;
 using QuestionBank.Application.DTOs.User;
-using QuestionBank.Application.DTOs.UserAnswer;
 using QuestionBank.Domain.Entities;
 
 namespace QuestionBank.Application.Configurations;
@@ -19,13 +18,6 @@ public class AutoMapperProfile : Profile
         CreateMap<AddUserDto, User>();
         CreateMap<UpdateUserDto, User>();
         CreateMap<User, UserDto>();
-
-        #endregion
-
-        #region UserAnswer
-
-        CreateMap<AddUserAnswerDto, UserAnswer>();
-        CreateMap<UserAnswer, UserAnswerDto>();
 
         #endregion
 

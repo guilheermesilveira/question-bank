@@ -42,12 +42,5 @@ public class QuestionMapping : IEntityTypeConfiguration<Question>
             .WithOne(a => a.Question)
             .HasForeignKey(a => a.QuestionId)
             .OnDelete(DeleteBehavior.Cascade);
-
-        // Relation: Question -> UserAnswer
-        builder
-            .HasMany(q => q.UserAnswers)
-            .WithOne(ua => ua.Question)
-            .HasForeignKey(ua => ua.QuestionId)
-            .OnDelete(DeleteBehavior.Cascade);
     }
 }

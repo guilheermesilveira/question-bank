@@ -35,12 +35,5 @@ public class AlternativeMapping : IEntityTypeConfiguration<Alternative>
             .WithMany(q => q.Alternatives)
             .HasForeignKey(a => a.QuestionId)
             .OnDelete(DeleteBehavior.Cascade);
-
-        // Relation: Alternative -> UserAnswer
-        builder
-            .HasMany(a => a.UserAnswers)
-            .WithOne(ua => ua.Alternative)
-            .HasForeignKey(ua => ua.AlternativeId)
-            .OnDelete(DeleteBehavior.Cascade);
     }
 }

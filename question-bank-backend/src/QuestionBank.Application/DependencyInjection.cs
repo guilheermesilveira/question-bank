@@ -36,7 +36,6 @@ public static class DependencyInjection
         services
             .AddScoped<IAuthService, AuthService>()
             .AddScoped<IUserService, UserService>()
-            .AddScoped<IUserAnswerService, UserAnswerService>()
             .AddScoped<ITopicService, TopicService>()
             .AddScoped<IQuestionService, QuestionService>()
             .AddScoped<IAlternativeService, AlternativeService>();
