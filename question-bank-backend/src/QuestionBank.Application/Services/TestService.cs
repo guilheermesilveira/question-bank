@@ -26,7 +26,7 @@ public class TestService : BaseService
         _questionRepository = questionRepository;
     }
 
-    public async Task<TestDto?> Create(AddTestDto dto)
+    public async Task<TestDto?> Create(CreateTestDto dto)
     {
         var user = await _userRepository.GetById(dto.UserId);
         if (user == null)
@@ -59,45 +59,9 @@ public class TestService : BaseService
         return await CommitChanges() ? Mapper.Map<TestDto>(test) : null;
     }
 
-    public async Task AnswerQuestion(int testId, int questionId, int alternativeId)
+    public async Task<TestDto?> Finish(FinishTestDto dto)
     {
-        var test = await _testRepository.GetById(testId);
-        if (test == null)
-        {
-            Notificator.Handle("Test not found");
-            return;
-        }
-
-        if (test.Status != ETestStatus.InProgress)
-        {
-            Notificator.Handle("Test already answered");
-            return;
-        }
-
-        var testQuestion = test.TestQuestions.FirstOrDefault(tq => tq.QuestionId == questionId);
-        if (testQuestion == null)
-        {
-            Notificator.Handle("Question doesn't belong to test");
-            return;
-        }
-
-        var alternative = testQuestion.Question.Alternatives.FirstOrDefault(a => a.Id == alternativeId);
-        if (alternative == null)
-        {
-            Notificator.Handle("Alternative not found for this question");
-            return;
-        }
-
-        testQuestion.SelectedAlternativeId = alternative.Id;
-        testQuestion.IsCorrect = alternative.IsCorrect;
-        _testRepository.Update(test);
-
-        await CommitChanges();
-    }
-
-    public async Task<TestDto?> Finish(int testId)
-    {
-        var test = await _testRepository.GetById(testId);
+        var test = await _testRepository.GetById(dto.TestId);
         if (test == null)
         {
             Notificator.Handle("Test not found");
@@ -108,6 +72,21 @@ public class TestService : BaseService
         {
             Notificator.Handle("Test already finished");
             return null;
+        }
+
+        foreach (var answer in dto.Answers)
+        {
+            var testQuestion = test.TestQuestions.FirstOrDefault(tq => tq.QuestionId == answer.QuestionId);
+            if (testQuestion == null)
+                continue;
+
+            var alternative = testQuestion.Question.Alternatives.FirstOrDefault(a =>
+                a.Id == answer.SelectedAlternativeId);
+            if (alternative == null)
+                continue;
+
+            testQuestion.SelectedAlternativeId = alternative.Id;
+            testQuestion.IsCorrect = alternative.IsCorrect;
         }
 
         test.NumberOfCorrectAnswers = test.TestQuestions.Count(tq => tq.IsCorrect == true);

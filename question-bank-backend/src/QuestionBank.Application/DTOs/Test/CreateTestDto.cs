@@ -2,7 +2,7 @@ using QuestionBank.Domain.Enums;
 
 namespace QuestionBank.Application.DTOs.Test;
 
-public class AddTestDto
+public class CreateTestDto
 {
     public int UserId { get; set; }
     public string Title { get; set; } = null!;
