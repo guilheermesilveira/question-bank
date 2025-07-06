@@ -8,6 +8,35 @@ public class TestMapping : IEntityTypeConfiguration<Test>
 {
     public void Configure(EntityTypeBuilder<Test> builder)
     {
+        builder
+            .HasKey(t => t.Id);
+
+        builder
+            .Property(t => t.Title)
+            .IsRequired();
+
+        builder
+            .Property(t => t.TotalQuestions)
+            .IsRequired();
+
+        builder
+            .Property(t => t.NumberOfCorrectAnswers)
+            .IsRequired();
+
+        builder
+            .Property(t => t.Status)
+            .IsRequired();
+
+        builder
+            .Property(t => t.CreatedAt)
+            .ValueGeneratedOnAdd()
+            .HasColumnType("DATETIME");
+
+        builder
+            .Property(t => t.UpdatedAt)
+            .ValueGeneratedOnAddOrUpdate()
+            .HasColumnType("DATETIME");
+
         // Relation: Test -> TestQuestion
         builder
             .HasMany(t => t.TestQuestions)

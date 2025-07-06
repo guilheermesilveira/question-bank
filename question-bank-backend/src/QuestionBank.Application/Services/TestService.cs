@@ -81,27 +81,40 @@ public class TestService : BaseService
             return;
         }
 
-        testQuestion.SelectedAlternativeId = alternativeId;
-        testQuestion.IsCorrect = testQuestion.Question.Alternatives.First(a => a.Id == alternativeId).IsCorrect;
+        var alternative = testQuestion.Question.Alternatives.FirstOrDefault(a => a.Id == alternativeId);
+        if (alternative == null)
+        {
+            Notificator.Handle("Alternative not found for this question");
+            return;
+        }
 
+        testQuestion.SelectedAlternativeId = alternative.Id;
+        testQuestion.IsCorrect = alternative.IsCorrect;
         _testRepository.Update(test);
+
         await CommitChanges();
     }
 
-    public async Task Finish(int testId)
+    public async Task<TestDto?> Finish(int testId)
     {
         var test = await _testRepository.GetById(testId);
         if (test == null)
         {
             Notificator.Handle("Test not found");
-            return;
+            return null;
+        }
+
+        if (test.Status == ETestStatus.Finished)
+        {
+            Notificator.Handle("Test already finished");
+            return null;
         }
 
         test.NumberOfCorrectAnswers = test.TestQuestions.Count(tq => tq.IsCorrect == true);
         test.Status = ETestStatus.Finished;
-
         _testRepository.Update(test);
-        await CommitChanges();
+
+        return await CommitChanges() ? Mapper.Map<TestDto>(test) : null;
     }
 
     private async Task<bool> CommitChanges()

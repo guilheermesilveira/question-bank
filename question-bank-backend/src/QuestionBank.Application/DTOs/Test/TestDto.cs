@@ -9,5 +9,5 @@ public class TestDto
     public int NumberOfCorrectAnswers { get; set; }
     public string Status { get; set; } = null!;
     public int UserId { get; set; }
-    public List<TestQuestion> TestQuestionList { get; set; } = null!;
+    public List<TestQuestion> TestQuestions { get; set; } = null!;
 }
