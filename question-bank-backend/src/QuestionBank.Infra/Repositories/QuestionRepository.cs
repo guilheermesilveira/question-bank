@@ -68,6 +68,16 @@ public class QuestionRepository : Repository<Question>, IQuestionRepository
         return await Context.Questions.AsNoTracking().FirstOrDefaultAsync(q => q.Id == id);
     }
 
+    public async Task<List<Question>> GetRandom(List<int> topicIds, EDifficultyLevel difficulty, int totalQuestions)
+    {
+        return await Context.Questions
+            .Where(q => topicIds.Contains(q.TopicId) && q.Difficulty == difficulty)
+            .OrderBy(q => Guid.NewGuid()) // Embaralhamento aleatório
+            .Take(totalQuestions)
+            .Include(q => q.Alternatives) // Inclui alternativas para exibição
+            .ToListAsync();
+    }
+
     public async Task<List<Question>> GetAll()
     {
         return await Context.Questions.AsNoTracking().ToListAsync();

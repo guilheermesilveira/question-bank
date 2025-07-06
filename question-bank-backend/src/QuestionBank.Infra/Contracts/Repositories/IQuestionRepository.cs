@@ -11,5 +11,6 @@ public interface IQuestionRepository : IRepository<Question>
     Task<IPagination<Question>> Search(string? statement, EDifficultyLevel? difficulty, int? topicId,
         int numberOfItemsPerPage = 10, int currentPage = 1);
     Task<Question?> GetById(int id);
+    Task<List<Question>> GetRandom(List<int> topicIds, EDifficultyLevel difficulty, int totalQuestions);
     Task<List<Question>> GetAll();
 }

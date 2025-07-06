@@ -1,9 +1,9 @@
 namespace QuestionBank.Domain.Entities;
 
-public class SimulatedExamQuestion : BaseEntity
+public class TestQuestion : BaseEntity
 {
-    public int SimulatedExamId { get; set; }
-    public SimulatedExam SimulatedExam { get; set; } = null!;
+    public int TestId { get; set; }
+    public Test Test { get; set; } = null!;
 
     public int QuestionId { get; set; }
     public Question Question { get; set; } = null!;

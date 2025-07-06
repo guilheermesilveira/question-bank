@@ -7,5 +7,5 @@ public class User : BaseEntity
     public string Password { get; set; } = null!;
     public bool IsAdmin { get; set; }
 
-    public List<SimulatedExam> SimulatedExams { get; set; } = null!;
+    public List<Test> Tests { get; set; } = null!;
 }

@@ -29,13 +29,6 @@ public class QuestionMapping : IEntityTypeConfiguration<Question>
             .ValueGeneratedOnAddOrUpdate()
             .HasColumnType("DATETIME");
 
-        // Relation: Question -> Topic
-        builder
-            .HasOne(q => q.Topic)
-            .WithMany(t => t.Questions)
-            .HasForeignKey(q => q.TopicId)
-            .OnDelete(DeleteBehavior.Cascade);
-
         // Relation: Question -> Alternative
         builder
             .HasMany(q => q.Alternatives)

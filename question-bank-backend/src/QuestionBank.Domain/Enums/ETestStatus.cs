@@ -1,6 +1,6 @@
 namespace QuestionBank.Domain.Enums;
 
-public enum ESimulatedExamStatus
+public enum ETestStatus
 {
     InProgress,
     Finished,

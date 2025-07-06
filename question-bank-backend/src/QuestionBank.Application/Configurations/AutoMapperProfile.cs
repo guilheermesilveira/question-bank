@@ -2,6 +2,7 @@ using AutoMapper;
 using QuestionBank.Application.DTOs.Alternative;
 using QuestionBank.Application.DTOs.Auth;
 using QuestionBank.Application.DTOs.Question;
+using QuestionBank.Application.DTOs.Test;
 using QuestionBank.Application.DTOs.Topic;
 using QuestionBank.Application.DTOs.User;
 using QuestionBank.Domain.Entities;
@@ -43,6 +44,13 @@ public class AutoMapperProfile : Profile
         CreateMap<AddAlternativeDto, Alternative>();
         CreateMap<UpdateAlternativeDto, Alternative>();
         CreateMap<Alternative, AlternativeDto>();
+
+        #endregion
+
+        #region Test
+
+        CreateMap<Test, TestDto>()
+            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString()));
 
         #endregion
     }

@@ -28,12 +28,5 @@ public class AlternativeMapping : IEntityTypeConfiguration<Alternative>
             .Property(a => a.UpdatedAt)
             .ValueGeneratedOnAddOrUpdate()
             .HasColumnType("DATETIME");
-
-        // Relation: Alternative -> Question
-        builder
-            .HasOne(a => a.Question)
-            .WithMany(q => q.Alternatives)
-            .HasForeignKey(a => a.QuestionId)
-            .OnDelete(DeleteBehavior.Cascade);
     }
 }

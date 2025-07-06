@@ -38,11 +38,11 @@ public class UserMapping : IEntityTypeConfiguration<User>
             .ValueGeneratedOnAddOrUpdate()
             .HasColumnType("DATETIME");
 
-        // Relation: User -> SimulatedExam
+        // Relation: User -> Test
         builder
-            .HasMany(u => u.SimulatedExams)
-            .WithOne(s => s.User)
-            .HasForeignKey(s => s.UserId)
+            .HasMany(u => u.Tests)
+            .WithOne(t => t.User)
+            .HasForeignKey(t => t.UserId)
             .OnDelete(DeleteBehavior.Cascade);
     }
 }
