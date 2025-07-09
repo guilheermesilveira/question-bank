@@ -10,8 +10,8 @@ public class TestValidator : AbstractValidator<Test>
         RuleFor(t => t.Title)
             .NotNull()
             .WithMessage("Title cannot be null")
-            .MaximumLength(50)
-            .WithMessage("Title cannot be longer than 50 characters");
+            .Length(1, 50)
+            .WithMessage("Title must contain between {MinLength} and {MaxLength} characters");
 
         RuleFor(t => t.TotalQuestions)
             .NotNull()

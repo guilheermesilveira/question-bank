@@ -14,24 +14,27 @@ public class TestService : BaseService, ITestService
     private readonly ITestRepository _testRepository;
     private readonly IUserRepository _userRepository;
     private readonly IQuestionRepository _questionRepository;
+    private readonly ITopicRepository _topicRepository;
 
     public TestService(
         INotificator notificator,
         IMapper mapper,
         ITestRepository testRepository,
         IUserRepository userRepository,
-        IQuestionRepository questionRepository
+        IQuestionRepository questionRepository,
+        ITopicRepository topicRepository
     ) : base(notificator, mapper)
     {
         _testRepository = testRepository;
         _userRepository = userRepository;
         _questionRepository = questionRepository;
+        _topicRepository = topicRepository;
     }
 
     public async Task<TestDto?> Create(CreateTestDto dto)
     {
         if (!await ValidationsToCreate(dto))
-            return null!;
+            return null;
 
         var questions = await _questionRepository.GetRandom(dto.TopicIds, dto.Difficulty, dto.TotalQuestions);
 
@@ -87,7 +90,7 @@ public class TestService : BaseService, ITestService
             return false;
         }
 
-        if (!Enum.IsDefined(typeof(EDifficultyLevel), dto.Difficulty))
+        if (dto.Difficulty != EDifficultyLevel.Easy && dto.Difficulty != EDifficultyLevel.Medium && dto.Difficulty != EDifficultyLevel.Hard)
         {
             Notificator.Handle("Difficulty must be either Easy or Medium or Hard");
             return false;
@@ -97,6 +100,16 @@ public class TestService : BaseService, ITestService
         {
             Notificator.Handle("TopicIds List cannot be empty");
             return false;
+        }
+
+        foreach (var topicId in dto.TopicIds)
+        {
+            var topic = await _topicRepository.GetById(topicId);
+            if (topic == null)
+            {
+                Notificator.Handle("In the topic list, there is an invalid topic");
+                return false;
+            }
         }
 
         var user = await _userRepository.GetById(dto.UserId);
