@@ -12,9 +12,9 @@ public class QuestionValidator : AbstractValidator<Question>
             .WithMessage("Statement cannot be null");
 
         RuleFor(q => q.Difficulty)
-            .IsInEnum()
-            .WithMessage("Difficulty must be either 'Easy' or 'Medium' or 'Hard'")
             .NotNull()
-            .WithMessage("Difficulty cannot be null");
+            .WithMessage("Difficulty cannot be null")
+            .IsInEnum()
+            .WithMessage("Difficulty must be either Easy or Medium or Hard");
     }
 }

@@ -38,6 +38,7 @@ public static class DependencyInjection
             .AddScoped<IUserService, UserService>()
             .AddScoped<ITopicService, TopicService>()
             .AddScoped<IQuestionService, QuestionService>()
-            .AddScoped<IAlternativeService, AlternativeService>();
+            .AddScoped<IAlternativeService, AlternativeService>()
+            .AddScoped<ITestService, TestService>();
     }
 }
