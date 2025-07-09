@@ -14,7 +14,7 @@ public class ApplicationDbContext : DbContext, IUnitOfWork
     public DbSet<User> Users { get; set; } = null!;
     public DbSet<Topic> Topics { get; set; } = null!;
     public DbSet<Question> Questions { get; set; } = null!;
-    public DbSet<Alternative> Alternatives { get; set; } = null!;
+    public DbSet<Option> Options { get; set; } = null!;
     public DbSet<Test> Tests { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -27,9 +27,9 @@ public class TestRepository : Repository<Test>, ITestRepository
             .Where(t => t.Id == id)
             .Include(t => t.TestQuestions)
                 .ThenInclude(tq => tq.Question)
-                    .ThenInclude(q => q.Alternatives)
+                    .ThenInclude(q => q.Options)
             .Include(t => t.TestQuestions)
-                .ThenInclude(tq => tq.SelectedAlternative)
+                .ThenInclude(tq => tq.SelectedOption)
             .FirstOrDefaultAsync();
     }
 }

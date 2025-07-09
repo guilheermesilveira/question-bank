@@ -72,9 +72,9 @@ public class QuestionRepository : Repository<Question>, IQuestionRepository
     {
         return await Context.Questions
             .Where(q => topicIds.Contains(q.TopicId) && q.Difficulty == difficulty)
-            .OrderBy(q => Guid.NewGuid()) // Embaralhamento aleatório
+            .OrderBy(q => Guid.NewGuid())
             .Take(totalQuestions)
-            .Include(q => q.Alternatives) // Inclui alternativas para exibição
+            .Include(q => q.Options)
             .ToListAsync();
     }
 

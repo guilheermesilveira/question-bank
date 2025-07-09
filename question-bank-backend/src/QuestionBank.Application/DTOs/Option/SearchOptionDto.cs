@@ -1,6 +1,6 @@
-namespace QuestionBank.Application.DTOs.Alternative;
+namespace QuestionBank.Application.DTOs.Option;
 
-public class SearchAlternativeDto
+public class SearchOptionDto
 {
     public string? Text { get; set; }
     public bool? IsCorrect { get; set; }

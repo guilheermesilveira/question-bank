@@ -3,15 +3,15 @@ using QuestionBank.Domain.Entities;
 
 namespace QuestionBank.Domain.Validators;
 
-public class AlternativeValidator : AbstractValidator<Alternative>
+public class OptionValidator : AbstractValidator<Option>
 {
-    public AlternativeValidator()
+    public OptionValidator()
     {
-        RuleFor(a => a.Text)
+        RuleFor(o => o.Text)
             .NotNull()
             .WithMessage("Text cannot be null");
 
-        RuleFor(a => a.IsCorrect)
+        RuleFor(o => o.IsCorrect)
             .NotNull()
             .WithMessage("IsCorrect cannot be null");
     }

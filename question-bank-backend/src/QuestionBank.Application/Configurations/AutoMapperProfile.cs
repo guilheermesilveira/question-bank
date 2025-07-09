@@ -1,6 +1,6 @@
 using AutoMapper;
-using QuestionBank.Application.DTOs.Alternative;
 using QuestionBank.Application.DTOs.Auth;
+using QuestionBank.Application.DTOs.Option;
 using QuestionBank.Application.DTOs.Question;
 using QuestionBank.Application.DTOs.Test;
 using QuestionBank.Application.DTOs.Topic;
@@ -39,11 +39,11 @@ public class AutoMapperProfile : Profile
 
         #endregion
 
-        #region Alternative
+        #region Option
 
-        CreateMap<AddAlternativeDto, Alternative>();
-        CreateMap<UpdateAlternativeDto, Alternative>();
-        CreateMap<Alternative, AlternativeDto>();
+        CreateMap<AddOptionDto, Option>();
+        CreateMap<UpdateOptionDto, Option>();
+        CreateMap<Option, OptionDto>();
 
         #endregion
 

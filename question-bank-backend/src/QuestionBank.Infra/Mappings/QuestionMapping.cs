@@ -29,11 +29,11 @@ public class QuestionMapping : IEntityTypeConfiguration<Question>
             .ValueGeneratedOnAddOrUpdate()
             .HasColumnType("DATETIME");
 
-        // Relation: Question -> Alternative
+        // Relation: Question -> Option
         builder
-            .HasMany(q => q.Alternatives)
-            .WithOne(a => a.Question)
-            .HasForeignKey(a => a.QuestionId)
+            .HasMany(q => q.Options)
+            .WithOne(o => o.Question)
+            .HasForeignKey(o => o.QuestionId)
             .OnDelete(DeleteBehavior.Cascade);
     }
 }

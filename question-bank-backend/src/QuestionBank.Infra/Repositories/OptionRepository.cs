@@ -7,48 +7,48 @@ using QuestionBank.Infra.Pagination;
 
 namespace QuestionBank.Infra.Repositories;
 
-public class AlternativeRepository : Repository<Alternative>, IAlternativeRepository
+public class OptionRepository : Repository<Option>, IOptionRepository
 {
-    public AlternativeRepository(ApplicationDbContext context) : base(context)
+    public OptionRepository(ApplicationDbContext context) : base(context)
     {
     }
 
-    public void Add(Alternative alternative)
+    public void Add(Option option)
     {
-        Context.Alternatives.Add(alternative);
+        Context.Options.Add(option);
     }
 
-    public void Update(Alternative alternative)
+    public void Update(Option option)
     {
-        Context.Alternatives.Update(alternative);
+        Context.Options.Update(option);
     }
 
-    public void Delete(Alternative alternative)
+    public void Delete(Option option)
     {
-        Context.Alternatives.Remove(alternative);
+        Context.Options.Remove(option);
     }
 
-    public async Task<IPagination<Alternative>> Search(
+    public async Task<IPagination<Option>> Search(
         string? text,
         bool? isCorrect,
         int? questionId,
         int numberOfItemsPerPage = 10,
         int currentPage = 1)
     {
-        var query = Context.Alternatives
+        var query = Context.Options
             .AsNoTracking()
             .AsQueryable();
 
         if (!string.IsNullOrEmpty(text))
-            query = query.Where(a => a.Text.Contains(text));
+            query = query.Where(o => o.Text.Contains(text));
 
         if (isCorrect.HasValue)
-            query = query.Where(a => a.IsCorrect == isCorrect);
+            query = query.Where(o => o.IsCorrect == isCorrect);
 
         if (questionId.HasValue)
-            query = query.Where(a => a.QuestionId == questionId);
+            query = query.Where(o => o.QuestionId == questionId);
 
-        var result = new Pagination<Alternative>
+        var result = new Pagination<Option>
         {
             TotalItems = await query.CountAsync(),
             NumberOfItemsPerPage = numberOfItemsPerPage,
@@ -62,13 +62,13 @@ public class AlternativeRepository : Repository<Alternative>, IAlternativeReposi
         return result;
     }
 
-    public async Task<Alternative?> GetById(int id)
+    public async Task<Option?> GetById(int id)
     {
-        return await Context.Alternatives.AsNoTracking().FirstOrDefaultAsync(a => a.Id == id);
+        return await Context.Options.AsNoTracking().FirstOrDefaultAsync(o => o.Id == id);
     }
 
-    public async Task<List<Alternative>> GetAll()
+    public async Task<List<Option>> GetAll()
     {
-        return await Context.Alternatives.AsNoTracking().ToListAsync();
+        return await Context.Options.AsNoTracking().ToListAsync();
     }
 }

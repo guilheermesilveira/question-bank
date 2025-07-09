@@ -10,5 +10,5 @@ public class Question : BaseEntity
     public int TopicId { get; set; }
     public Topic Topic { get; set; } = null!;
 
-    public List<Alternative> Alternatives { get; set; } = null!;
+    public List<Option> Options { get; set; } = null!;
 }

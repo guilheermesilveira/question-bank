@@ -4,28 +4,28 @@ using QuestionBank.Domain.Entities;
 
 namespace QuestionBank.Infra.Mappings;
 
-public class AlternativeMapping : IEntityTypeConfiguration<Alternative>
+public class OptionMapping : IEntityTypeConfiguration<Option>
 {
-    public void Configure(EntityTypeBuilder<Alternative> builder)
+    public void Configure(EntityTypeBuilder<Option> builder)
     {
         builder
-            .HasKey(a => a.Id);
+            .HasKey(o => o.Id);
 
         builder
-            .Property(a => a.Text)
+            .Property(o => o.Text)
             .IsRequired();
 
         builder
-            .Property(a => a.IsCorrect)
+            .Property(o => o.IsCorrect)
             .IsRequired();
 
         builder
-            .Property(a => a.CreatedAt)
+            .Property(o => o.CreatedAt)
             .ValueGeneratedOnAdd()
             .HasColumnType("DATETIME");
 
         builder
-            .Property(a => a.UpdatedAt)
+            .Property(o => o.UpdatedAt)
             .ValueGeneratedOnAddOrUpdate()
             .HasColumnType("DATETIME");
     }

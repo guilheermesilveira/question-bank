@@ -1,8 +1,7 @@
-namespace QuestionBank.Application.DTOs.Alternative;
+namespace QuestionBank.Application.DTOs.Option;
 
-public class UpdateAlternativeDto
+public class AddOptionDto
 {
-    public int Id { get; set; }
     public string Text { get; set; } = null!;
     public bool IsCorrect { get; set; }
     public int QuestionId { get; set; }

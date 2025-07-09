@@ -34,7 +34,7 @@ public static class DependencyInjection
             .AddScoped<IUserRepository, UserRepository>()
             .AddScoped<ITopicRepository, TopicRepository>()
             .AddScoped<IQuestionRepository, QuestionRepository>()
-            .AddScoped<IAlternativeRepository, AlternativeRepository>()
+            .AddScoped<IOptionRepository, OptionRepository>()
             .AddScoped<ITestRepository, TestRepository>();
     }
 }

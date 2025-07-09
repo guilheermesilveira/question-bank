@@ -32,11 +32,11 @@ public class TestQuestionMapping : IEntityTypeConfiguration<TestQuestion>
             .HasForeignKey(tq => tq.QuestionId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        // Relation: TestQuestion -> Alternative
+        // Relation: TestQuestion -> Option
         builder
-            .HasOne(tq => tq.SelectedAlternative)
+            .HasOne(tq => tq.SelectedOption)
             .WithMany()
-            .HasForeignKey(tq => tq.SelectedAlternativeId)
+            .HasForeignKey(tq => tq.SelectedOptionId)
             .OnDelete(DeleteBehavior.SetNull);
     }
 }

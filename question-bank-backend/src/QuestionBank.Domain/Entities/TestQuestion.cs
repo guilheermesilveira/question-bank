@@ -8,8 +8,8 @@ public class TestQuestion : BaseEntity
     public int QuestionId { get; set; }
     public Question Question { get; set; } = null!;
 
-    public int? SelectedAlternativeId { get; set; }
-    public Alternative? SelectedAlternative { get; set; }
+    public int? SelectedOptionId { get; set; }
+    public Option? SelectedOption { get; set; }
 
     public bool? IsCorrect { get; set; }
 }

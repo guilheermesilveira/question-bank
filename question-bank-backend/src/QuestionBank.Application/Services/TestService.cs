@@ -65,11 +65,10 @@ public class TestService : BaseService, ITestService
         foreach (var answer in dto.Answers)
         {
             var testQuestion = test!.TestQuestions.FirstOrDefault(tq => tq.QuestionId == answer.QuestionId);
-            var alternative = testQuestion!.Question.Alternatives.FirstOrDefault(a =>
-                a.Id == answer.SelectedAlternativeId);
+            var option = testQuestion!.Question.Options.FirstOrDefault(o => o.Id == answer.SelectedOptionId);
 
-            testQuestion.SelectedAlternativeId = alternative!.Id;
-            testQuestion.IsCorrect = alternative.IsCorrect;
+            testQuestion.SelectedOptionId = option!.Id;
+            testQuestion.IsCorrect = option.IsCorrect;
         }
 
         test!.NumberOfCorrectAnswers = test.TestQuestions.Count(tq => tq.IsCorrect == true);
@@ -90,7 +89,8 @@ public class TestService : BaseService, ITestService
             return false;
         }
 
-        if (dto.Difficulty != EDifficultyLevel.Easy && dto.Difficulty != EDifficultyLevel.Medium && dto.Difficulty != EDifficultyLevel.Hard)
+        if (dto.Difficulty != EDifficultyLevel.Easy && dto.Difficulty != EDifficultyLevel.Medium &&
+            dto.Difficulty != EDifficultyLevel.Hard)
         {
             Notificator.Handle("Difficulty must be either Easy or Medium or Hard");
             return false;
@@ -159,11 +159,10 @@ public class TestService : BaseService, ITestService
                 return false;
             }
 
-            var alternative = testQuestion.Question.Alternatives.FirstOrDefault(a =>
-                a.Id == answer.SelectedAlternativeId);
-            if (alternative == null)
+            var option = testQuestion.Question.Options.FirstOrDefault(o => o.Id == answer.SelectedOptionId);
+            if (option == null)
             {
-                Notificator.Handle("In the list, there is an invalid alternative");
+                Notificator.Handle("In the list, there is an invalid option");
                 return false;
             }
         }
