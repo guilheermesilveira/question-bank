@@ -62,7 +62,7 @@ public class QuestionController : BaseController
         return OkResponse(questions);
     }
 
-    [HttpGet("get-by-id/{id}")]
+    [HttpGet("{id}")]
     [SwaggerOperation(Summary = "Get a question by ID", Tags = new[] { "Questions" })]
     [ProducesResponseType(typeof(QuestionDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -73,7 +73,7 @@ public class QuestionController : BaseController
         return OkResponse(question);
     }
 
-    [HttpGet("get-all")]
+    [HttpGet]
     [SwaggerOperation(Summary = "Get all questions", Tags = new[] { "Questions" })]
     [ProducesResponseType(typeof(List<QuestionDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]

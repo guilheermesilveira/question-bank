@@ -62,7 +62,7 @@ public class UserController : BaseController
         return OkResponse(users);
     }
 
-    [HttpGet("get-by-id/{id}")]
+    [HttpGet("{id}")]
     [SwaggerOperation(Summary = "Get a user by ID", Tags = new[] { "Users" })]
     [ProducesResponseType(typeof(UserDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -73,7 +73,7 @@ public class UserController : BaseController
         return OkResponse(user);
     }
 
-    [HttpGet("get-all")]
+    [HttpGet]
     [SwaggerOperation(Summary = "Get all users", Tags = new[] { "Users" })]
     [ProducesResponseType(typeof(List<UserDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]

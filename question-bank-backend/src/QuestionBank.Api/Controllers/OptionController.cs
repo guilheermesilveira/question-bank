@@ -62,7 +62,7 @@ public class OptionController : BaseController
         return OkResponse(options);
     }
 
-    [HttpGet("get-by-id/{id}")]
+    [HttpGet("{id}")]
     [SwaggerOperation(Summary = "Get a option by ID", Tags = new[] { "Options" })]
     [ProducesResponseType(typeof(OptionDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -73,7 +73,7 @@ public class OptionController : BaseController
         return OkResponse(option);
     }
 
-    [HttpGet("get-all")]
+    [HttpGet]
     [SwaggerOperation(Summary = "Get all options", Tags = new[] { "Options" })]
     [ProducesResponseType(typeof(List<OptionDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]

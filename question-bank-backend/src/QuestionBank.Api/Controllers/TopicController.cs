@@ -62,7 +62,7 @@ public class TopicController : BaseController
         return OkResponse(topics);
     }
 
-    [HttpGet("get-by-id/{id}")]
+    [HttpGet("{id}")]
     [SwaggerOperation(Summary = "Get a topic by ID", Tags = new[] { "Topics" })]
     [ProducesResponseType(typeof(TopicDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -73,7 +73,7 @@ public class TopicController : BaseController
         return OkResponse(topic);
     }
 
-    [HttpGet("get-all")]
+    [HttpGet]
     [SwaggerOperation(Summary = "Get all topics", Tags = new[] { "Topics" })]
     [ProducesResponseType(typeof(List<TopicDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
