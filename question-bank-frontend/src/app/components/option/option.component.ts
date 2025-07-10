@@ -1,34 +1,34 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AddAlternative, Alternative, UpdateAlternative } from 'src/app/models/alternative.model';
+import { AddOption, Option, UpdateOption } from 'src/app/models/option.model';
 import { Question } from 'src/app/models/question.model';
-import { AlternativeService } from 'src/app/services/alternative.service';
+import { OptionService } from 'src/app/services/option.service';
 import { QuestionService } from 'src/app/services/question.service';
 
 @Component({
-  selector: 'app-alternative',
-  templateUrl: './alternative.component.html',
-  styleUrls: ['./alternative.component.css']
+  selector: 'app-option',
+  templateUrl: './option.component.html',
+  styleUrls: ['./option.component.css']
 })
-export class AlternativeComponent implements OnInit {
+export class OptionComponent implements OnInit {
 
   formGroup!: FormGroup;
   isEditing: boolean = false;
-  alternatives: Alternative[] = [];
-  alternativeIdEdited!: number;
+  options: Option[] = [];
+  optionIdEdited!: number;
   questions: Question[] = [];
   questionStatements: { [key: number]: string } = {};
   errorMessage: string | null = null;
 
   constructor(
     private formBuilder: FormBuilder,
-    private alternativeService: AlternativeService,
+    private optionService: OptionService,
     private questionService: QuestionService
   ) { }
 
   ngOnInit(): void {
     this.initForm();
-    this.loadAlternatives();
+    this.loadOptions();
     this.loadQuestions();
   }
 
@@ -47,18 +47,18 @@ export class AlternativeComponent implements OnInit {
       const questionId = this.formGroup.get('questionId')?.value;
 
       if (this.isEditing) {
-        const alternative: UpdateAlternative = {
-          id: this.alternativeIdEdited,
+        const option: UpdateOption = {
+          id: this.optionIdEdited,
           text: text,
           isCorrect: isCorrect,
           questionId: questionId
         }
 
-        this.alternativeService.update(alternative).subscribe({
+        this.optionService.update(option).subscribe({
           next: () => {
             this.errorMessage = null;
             this.resetForm();
-            this.loadAlternatives();
+            this.loadOptions();
           },
           error: err => {
             const serverError = err.error.errors?.[0];
@@ -73,17 +73,17 @@ export class AlternativeComponent implements OnInit {
           }
         });
       } else {
-        const alternative: AddAlternative = {
+        const option: AddOption = {
           text: text,
           isCorrect: isCorrect,
           questionId: questionId
         }
 
-        this.alternativeService.add(alternative).subscribe({
+        this.optionService.add(option).subscribe({
           next: () => {
             this.errorMessage = null;
             this.resetForm();
-            this.loadAlternatives();
+            this.loadOptions();
           },
           error: err => {
             const serverError = err.error.errors?.[0];
@@ -106,29 +106,29 @@ export class AlternativeComponent implements OnInit {
     this.isEditing = false;
   }
 
-  loadAlternatives(): void {
-    this.alternativeService.getAll().subscribe({
-      next: alternatives => {
+  loadOptions(): void {
+    this.optionService.getAll().subscribe({
+      next: options => {
         this.errorMessage = null;
-        this.alternatives = alternatives;
-        this.loadQuestionStatements(alternatives);
+        this.options = options;
+        this.loadQuestionStatements(options);
       },
       error: () => this.errorMessage = 'Erro ao carregar alternativas. Tente novamente.'
     });
   }
 
-  editAlternative(alternative: Alternative): void {
-    this.alternativeIdEdited = alternative.id;
+  editOption(option: Option): void {
+    this.optionIdEdited = option.id;
     this.isEditing = true;
-    this.formGroup.patchValue(alternative);
+    this.formGroup.patchValue(option);
   }
 
-  deleteAlternative(id: number): void {
+  deleteOption(id: number): void {
     if (confirm('Tem certeza que deseja excluir esta alternativa?')) {
-      this.alternativeService.delete(id).subscribe({
+      this.optionService.delete(id).subscribe({
         next: () => {
           this.errorMessage = null;
-          this.loadAlternatives();
+          this.loadOptions();
         },
         error: () => this.errorMessage = 'Erro ao deletar alternativa. Tente novamente.'
       });
@@ -145,9 +145,9 @@ export class AlternativeComponent implements OnInit {
     });
   }
 
-  loadQuestionStatements(alternatives: Alternative[]): void {
-    alternatives.forEach(alternative => {
-      const questionId = alternative.questionId;
+  loadQuestionStatements(options: Option[]): void {
+    options.forEach(option => {
+      const questionId = option.questionId;
 
       if (!this.questionStatements[questionId]) {
         this.questionService.getById(questionId).subscribe(question => {

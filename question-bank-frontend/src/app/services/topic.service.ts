@@ -36,10 +36,10 @@ export class TopicService {
   }
 
   getById(id: number): Observable<Topic> {
-    return this.http.get<Topic>(`${this.api}/get-by-id/${id}`);
+    return this.http.get<Topic>(`${this.api}/${id}`);
   }
 
   getAll(): Observable<Topic[]> {
-    return this.http.get<Topic[]>(`${this.api}/get-all`);
+    return this.http.get<Topic[]>(`${this.api}`);
   }
 }

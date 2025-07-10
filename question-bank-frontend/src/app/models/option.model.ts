@@ -1,24 +1,24 @@
-export interface Alternative {
+export interface Option {
   id: number;
   text: string;
   isCorrect: boolean;
   questionId: number;
 }
 
-export interface AddAlternative {
+export interface AddOption {
   text: string;
   isCorrect: boolean;
   questionId: number;
 }
 
-export interface UpdateAlternative {
+export interface UpdateOption {
   id: number;
   text: string;
   isCorrect: boolean;
   questionId: number;
 }
 
-export interface SearchAlternative {
+export interface SearchOption {
   text?: string;
   isCorrect?: boolean;
   questionId?: number;

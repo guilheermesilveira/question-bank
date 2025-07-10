@@ -44,10 +44,10 @@ export class QuestionService {
   }
 
   getById(id: number): Observable<Question> {
-    return this.http.get<Question>(`${this.api}/get-by-id/${id}`);
+    return this.http.get<Question>(`${this.api}/${id}`);
   }
 
   getAll(): Observable<Question[]> {
-    return this.http.get<Question[]>(`${this.api}/get-all`);
+    return this.http.get<Question[]>(`${this.api}`);
   }
 }

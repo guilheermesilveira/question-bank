@@ -12,7 +12,7 @@ import { UserComponent } from './components/user/user.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { QuestionComponent } from './components/question/question.component';
 import { TopicComponent } from './components/topic/topic.component';
-import { AlternativeComponent } from './components/alternative/alternative.component';
+import { OptionComponent } from './components/option/option.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +23,7 @@ import { AlternativeComponent } from './components/alternative/alternative.compo
     DashboardComponent,
     QuestionComponent,
     TopicComponent,
-    AlternativeComponent
+    OptionComponent
   ],
   imports: [
     BrowserModule,

@@ -40,10 +40,10 @@ export class UserService {
   }
 
   getById(id: number): Observable<User> {
-    return this.http.get<User>(`${this.api}/get-by-id/${id}`);
+    return this.http.get<User>(`${this.api}/${id}`);
   }
 
   getAll(): Observable<User[]> {
-    return this.http.get<User[]>(`${this.api}/get-all`);
+    return this.http.get<User[]>(`${this.api}`);
   }
 }
