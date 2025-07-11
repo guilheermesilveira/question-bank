@@ -47,7 +47,8 @@ public class TestService : BaseService, ITestService
             UserId = dto.UserId,
             TestQuestions = questions.Select(q => new TestQuestion
             {
-                QuestionId = q.Id
+                QuestionId = q.Id,
+                IsCorrect = null
             }).ToList()
         };
         _testRepository.Add(test);

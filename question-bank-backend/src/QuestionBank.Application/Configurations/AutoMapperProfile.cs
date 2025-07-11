@@ -52,6 +52,7 @@ public class AutoMapperProfile : Profile
         CreateMap<CreateTestDto, Test>();
         CreateMap<Test, TestDto>()
             .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString()));
+        CreateMap<TestQuestion, TestQuestionDto>();
 
         #endregion
     }

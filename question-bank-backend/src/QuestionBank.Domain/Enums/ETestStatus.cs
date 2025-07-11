@@ -2,7 +2,7 @@ namespace QuestionBank.Domain.Enums;
 
 public enum ETestStatus
 {
-    InProgress,
-    Finished,
-    Canceled
+    InProgress = 1,
+    Finished = 2,
+    Canceled = 3
 }

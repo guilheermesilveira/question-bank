@@ -13,6 +13,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { QuestionComponent } from './components/question/question.component';
 import { TopicComponent } from './components/topic/topic.component';
 import { OptionComponent } from './components/option/option.component';
+import { TestComponent } from './components/test/test.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { OptionComponent } from './components/option/option.component';
     DashboardComponent,
     QuestionComponent,
     TopicComponent,
-    OptionComponent
+    OptionComponent,
+    TestComponent
   ],
   imports: [
     BrowserModule,

@@ -8,6 +8,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { QuestionComponent } from './components/question/question.component';
 import { TopicComponent } from './components/topic/topic.component';
 import { OptionComponent } from './components/option/option.component';
+import { TestComponent } from './components/test/test.component';
 
 const routes: Routes = [
   {
@@ -38,6 +39,10 @@ const routes: Routes = [
       {
         path: 'options',
         component: OptionComponent
+      },
+      {
+        path: 'tests',
+        component: TestComponent
       }
     ]
   }

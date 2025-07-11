@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using QuestionBank.Infra.Context;
 
@@ -10,9 +11,10 @@ using QuestionBank.Infra.Context;
 namespace QuestionBank.Infra.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250711173236_FixColumnIsCorrectFromTestQuestion")]
+    partial class FixColumnIsCorrectFromTestQuestion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,7 +49,7 @@ namespace QuestionBank.Infra.Migrations
 
                     b.HasIndex("QuestionId");
 
-                    b.ToTable("Options", (string)null);
+                    b.ToTable("Options");
                 });
 
             modelBuilder.Entity("QuestionBank.Domain.Entities.Question", b =>
@@ -78,7 +80,7 @@ namespace QuestionBank.Infra.Migrations
 
                     b.HasIndex("TopicId");
 
-                    b.ToTable("Questions", (string)null);
+                    b.ToTable("Questions");
                 });
 
             modelBuilder.Entity("QuestionBank.Domain.Entities.Test", b =>
@@ -115,7 +117,7 @@ namespace QuestionBank.Infra.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Tests", (string)null);
+                    b.ToTable("Tests");
                 });
 
             modelBuilder.Entity("QuestionBank.Domain.Entities.TestQuestion", b =>
@@ -152,7 +154,7 @@ namespace QuestionBank.Infra.Migrations
 
                     b.HasIndex("TestId");
 
-                    b.ToTable("TestQuestion", (string)null);
+                    b.ToTable("TestQuestion");
                 });
 
             modelBuilder.Entity("QuestionBank.Domain.Entities.Topic", b =>
@@ -175,7 +177,7 @@ namespace QuestionBank.Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Topics", (string)null);
+                    b.ToTable("Topics");
                 });
 
             modelBuilder.Entity("QuestionBank.Domain.Entities.User", b =>
@@ -209,7 +211,7 @@ namespace QuestionBank.Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("QuestionBank.Domain.Entities.Option", b =>

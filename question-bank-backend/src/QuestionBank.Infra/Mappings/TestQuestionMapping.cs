@@ -13,7 +13,7 @@ public class TestQuestionMapping : IEntityTypeConfiguration<TestQuestion>
 
         builder
             .Property(tq => tq.IsCorrect)
-            .IsRequired();
+            .IsRequired(false);
 
         builder
             .Property(tq => tq.CreatedAt)
