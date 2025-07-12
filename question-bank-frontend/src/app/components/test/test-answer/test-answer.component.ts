@@ -33,7 +33,7 @@ export class TestAnswerComponent implements OnInit {
         this.currentTest = test;
         this.initForm();
       },
-      error: () => this.router.navigate(['/tests'])
+      error: () => this.onBack()
     });
   }
 
