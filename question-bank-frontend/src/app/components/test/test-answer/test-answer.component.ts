@@ -30,11 +30,10 @@ export class TestAnswerComponent implements OnInit {
     const testId = Number(this.route.snapshot.paramMap.get('id'));
     this.testService.getById(testId).subscribe({
       next: test => {
-        this.errorMessage = null;
         this.currentTest = test;
         this.initForm();
       },
-      error: () => this.errorMessage = 'Erro ao carregar simulado. Tente novamente.'
+      error: () => this.router.navigate(['/tests'])
     });
   }
 
