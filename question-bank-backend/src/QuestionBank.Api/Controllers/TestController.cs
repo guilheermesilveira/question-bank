@@ -39,6 +39,17 @@ public class TestController : BaseController
         return CreatedResponse("", test);
     }
 
+    [HttpPatch("cancel/{id}")]
+    [SwaggerOperation(Summary = "Cancel a test", Tags = new[] { "Tests" })]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> Cancel(int id)
+    {
+        await _testService.Cancel(id);
+        return NoContentResponse();
+    }
+
     [HttpGet("{id}")]
     [SwaggerOperation(Summary = "Get a test by ID", Tags = new[] { "Tests" })]
     [ProducesResponseType(typeof(TestDto), StatusCodes.Status200OK)]

@@ -79,6 +79,20 @@ public class TestService : BaseService, ITestService
         return await CommitChanges() ? Mapper.Map<TestDto>(test) : null;
     }
 
+    public async Task Cancel(int id)
+    {
+        var test = await _testRepository.GetById(id);
+        if (test == null)
+        {
+            Notificator.HandleNotFoundResource();
+            return;
+        }
+
+        test.Status = ETestStatus.Canceled;
+        _testRepository.Update(test);
+        await CommitChanges();
+    }
+
     public async Task<TestDto?> GetById(int id)
     {
         var test = await _testRepository.GetById(id);
@@ -152,6 +166,12 @@ public class TestService : BaseService, ITestService
         if (test.Status == ETestStatus.Finished)
         {
             Notificator.Handle("Test already finished");
+            return false;
+        }
+
+        if (test.Status == ETestStatus.Canceled)
+        {
+            Notificator.Handle("Test already canceled");
             return false;
         }
 
