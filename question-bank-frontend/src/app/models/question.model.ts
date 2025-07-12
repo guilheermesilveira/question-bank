@@ -1,8 +1,11 @@
+import { Option } from "./option.model";
+
 export interface Question {
   id: number;
   statement: string;
   difficulty: EDifficultyLevel;
   topicId: number;
+  options: Option[];
 }
 
 export interface AddQuestion {

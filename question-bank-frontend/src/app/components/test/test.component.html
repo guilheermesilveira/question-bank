@@ -1,1 +1,78 @@
-<p>test works!</p>
+<div class="container mt-4">
+  <div class="card shadow-sm border-0 mb-4">
+    <div class="card-body">
+      <h4 class="card-title fw-bold text-primary mb-4">
+        <i class="bi bi-clipboard-check me-2"></i>Gerar Simulado
+      </h4>
+
+      <div *ngIf="errorMessage" class="alert alert-danger">
+        {{ errorMessage }}
+      </div>
+
+      <form [formGroup]="formGroup" (ngSubmit)="onSubmitForm()">
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Título</label>
+          <input type="text" formControlName="title" class="form-control"
+            placeholder="Informe um título para o simulado">
+          <div *ngIf="formGroup.get('title')?.touched && formGroup.get('title')?.invalid"
+            class="text-danger mt-1 small">
+            <span *ngIf="formGroup.get('title')?.errors?.['required']">
+              Título é obrigatório
+            </span>
+            <span *ngIf="formGroup.get('title')?.errors?.['maxlength']">
+              Título deve possuir no máximo 50 caracteres
+            </span>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Quantidade de Questões</label>
+          <input type="number" formControlName="totalQuestions" class="form-control"
+            placeholder="Informe a quantidade de questões desejada">
+          <div *ngIf="formGroup.get('totalQuestions')?.touched && formGroup.get('totalQuestions')?.invalid"
+            class="text-danger mt-1 small">
+            <span *ngIf="formGroup.get('totalQuestions')?.errors?.['required']">
+              Quantidade de Questões é obrigatório
+            </span>
+            <span *ngIf="formGroup.get('totalQuestions')?.errors?.['min']">
+              A quantidade mínima de questões para gerar o simulado é 1
+            </span>
+            <span *ngIf="formGroup.get('totalQuestions')?.errors?.['max']">
+              A quantidade máxima de questões para gerar o simulado é 20
+            </span>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Grau de Dificuldade</label>
+          <select formControlName="difficulty" class="form-select">
+            <option value="" disabled selected>Selecione o grau de dificuldade</option>
+            <option value="Easy">Fácil</option>
+            <option value="Medium">Médio</option>
+            <option value="Hard">Difícil</option>
+          </select>
+          <div *ngIf="formGroup.get('difficulty')?.touched && formGroup.get('difficulty')?.hasError('required')"
+            class="text-danger mt-1 small">
+            Campo obrigatório
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Tópicos</label>
+          <select formControlName="topicIds" class="form-select">
+            <option value="" disabled selected>Escolha quais tópicos serão usados no sorteio de questões</option>
+            <option *ngFor="let topic of topics" [value]="topic.id">{{ topic.name }}</option>
+          </select>
+          <div *ngIf="formGroup.get('topicIds')?.touched && formGroup.get('topicIds')?.hasError('required')"
+            class="text-danger mt-1 small">
+            Campo obrigatório
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-success" [disabled]="formGroup.invalid">
+          <i class="bi bi-check-circle me-1"></i>Gerar
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
