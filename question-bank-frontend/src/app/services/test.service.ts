@@ -20,6 +20,10 @@ export class TestService {
     return this.http.post<Test>(`${this.api}/finish`, test);
   }
 
+  cancel(id: number): Observable<void> {
+    return this.http.patch<void>(`${this.api}/cancel/${id}`, null);
+  }
+
   getById(id: number): Observable<Test> {
     return this.http.get<Test>(`${this.api}/${id}`);
   }

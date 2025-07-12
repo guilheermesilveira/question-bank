@@ -74,6 +74,16 @@ export class TestAnswerComponent implements OnInit {
     }
   }
 
+  cancelTest(): void {
+    this.testService.cancel(this.currentTest.id).subscribe({
+      next: () => {
+        this.errorMessage = null;
+        this.onBack();
+      },
+      error: () => this.errorMessage = 'Erro ao cancelar simulado. Tente novamente.'
+    });
+  }
+
   getCorrectOptionText(questionIndex: number): string {
     const options = this.currentTest.testQuestions[questionIndex].question.options;
     const correct = options.find(opt => opt.isCorrect);

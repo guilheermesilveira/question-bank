@@ -9,7 +9,7 @@
         {{ errorMessage }}
       </div>
 
-      <form *ngIf="currentTest.status !== 'Finished'" [formGroup]="formGroup" (ngSubmit)="onSubmitForm()">
+      <form *ngIf="currentTest.status === 'InProgress'" [formGroup]="formGroup" (ngSubmit)="onSubmitForm()">
         <div formArrayName="questions">
           <div *ngFor="let questionGroup of questionForms.controls; let i = index" [formGroupName]="i" class="mb-4">
             <div class="card border-0 shadow-sm">
@@ -30,9 +30,14 @@
           </div>
         </div>
 
-        <button type="submit" class="btn btn-success" [disabled]="formGroup.invalid">
-          <i class="bi bi-send-check me-1"></i>Finalizar
-        </button>
+        <div class="d-flex justify-content-between align-items-center mt-4">
+          <button type="button" class="btn btn-danger" (click)="cancelTest()">
+            <i class="bi bi-x-circle me-1"></i>Cancelar
+          </button>
+          <button type="submit" class="btn btn-success" [disabled]="formGroup.invalid">
+            <i class="bi bi-send-check me-1"></i>Finalizar
+          </button>
+        </div>
       </form>
 
       <div *ngIf="currentTest.status === 'Finished'">
@@ -62,7 +67,7 @@
           </div>
         </div>
         <div class="d-flex justify-content-between align-items-center mt-4">
-          <button type="button" class="btn btn-outline-secondary" (click)="onBack()">
+          <button type="button" class="btn btn-secondary" (click)="onBack()">
             <i class="bi bi-arrow-left-circle me-1"></i>Voltar
           </button>
           <span class="badge bg-primary fs-6">
