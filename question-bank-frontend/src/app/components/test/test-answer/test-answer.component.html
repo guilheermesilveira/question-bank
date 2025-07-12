@@ -1,0 +1,39 @@
+<div class="container mt-4" *ngIf="currentTest">
+  <div class="card shadow-sm border-0 mb-4">
+    <div class="card-body">
+      <h4 class="card-title fw-bold text-primary mb-4">
+        <i class="bi bi-clipboard-check me-2"></i>{{ currentTest.title }}
+      </h4>
+
+      <div *ngIf="errorMessage" class="alert alert-danger">
+        {{ errorMessage }}
+      </div>
+
+      <form [formGroup]="formGroup" (ngSubmit)="onSubmitForm()">
+        <div formArrayName="questions">
+          <div *ngFor="let questionGroup of questionForms.controls; let i = index" [formGroupName]="i" class="mb-4">
+            <div class="card border-0 shadow-sm">
+              <div class="card-header bg-light">
+                <strong>Questão {{ i + 1 }}</strong>
+              </div>
+              <div class="card-body">
+                <p class="mb-3">{{ currentTest.testQuestions[i].question.statement }}</p>
+                <div *ngFor="let option of currentTest.testQuestions[i].question.options" class="form-check mb-2">
+                  <input type="radio" class="form-check-input" [id]="'q' + i + 'opt' + option.id" [value]="option.id"
+                    formControlName="selectedOption" />
+                  <label class="form-check-label" [for]="'q' + i + 'opt' + option.id">
+                    {{ option.text }}
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-success" [disabled]="formGroup.invalid">
+          <i class="bi bi-send-check me-1"></i>Finalizar
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

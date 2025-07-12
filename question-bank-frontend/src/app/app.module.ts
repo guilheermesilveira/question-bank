@@ -14,6 +14,7 @@ import { QuestionComponent } from './components/question/question.component';
 import { TopicComponent } from './components/topic/topic.component';
 import { OptionComponent } from './components/option/option.component';
 import { TestComponent } from './components/test/test.component';
+import { TestAnswerComponent } from './components/test/test-answer/test-answer.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { TestComponent } from './components/test/test.component';
     QuestionComponent,
     TopicComponent,
     OptionComponent,
-    TestComponent
+    TestComponent,
+    TestAnswerComponent
   ],
   imports: [
     BrowserModule,

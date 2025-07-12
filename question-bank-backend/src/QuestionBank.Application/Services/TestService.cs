@@ -79,6 +79,16 @@ public class TestService : BaseService, ITestService
         return await CommitChanges() ? Mapper.Map<TestDto>(test) : null;
     }
 
+    public async Task<TestDto?> GetById(int id)
+    {
+        var test = await _testRepository.GetById(id);
+        if (test != null)
+            return Mapper.Map<TestDto>(test);
+
+        Notificator.HandleNotFoundResource();
+        return null;
+    }
+
     private async Task<bool> ValidationsToCreate(CreateTestDto dto)
     {
         var test = Mapper.Map<Test>(dto);

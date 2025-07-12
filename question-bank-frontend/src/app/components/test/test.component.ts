@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CreateTest, Test } from 'src/app/models/test.model';
+import { Router } from '@angular/router';
+import { CreateTest } from 'src/app/models/test.model';
 import { Topic } from 'src/app/models/topic.model';
 import { TestService } from 'src/app/services/test.service';
 import { TopicService } from 'src/app/services/topic.service';
@@ -16,12 +17,12 @@ export class TestComponent implements OnInit {
   errorMessage: string | null = null;
   currentUserId!: number;
   topics: Topic[] = [];
-  currentTest!: Test;
 
   constructor(
     private formBuilder: FormBuilder,
     private testService: TestService,
-    private topicService: TopicService
+    private topicService: TopicService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -59,8 +60,8 @@ export class TestComponent implements OnInit {
       this.testService.create(test).subscribe({
         next: test => {
           this.errorMessage = null;
-          this.currentTest = test;
           this.formGroup.reset();
+          this.router.navigate(['/tests', test.id]);
         },
         error: err => {
           const serverError = err.error.errors?.[0];

@@ -9,6 +9,7 @@ import { QuestionComponent } from './components/question/question.component';
 import { TopicComponent } from './components/topic/topic.component';
 import { OptionComponent } from './components/option/option.component';
 import { TestComponent } from './components/test/test.component';
+import { TestAnswerComponent } from './components/test/test-answer/test-answer.component';
 
 const routes: Routes = [
   {
@@ -43,6 +44,10 @@ const routes: Routes = [
       {
         path: 'tests',
         component: TestComponent
+      },
+      {
+        path: 'tests/:id',
+        component: TestAnswerComponent
       }
     ]
   }

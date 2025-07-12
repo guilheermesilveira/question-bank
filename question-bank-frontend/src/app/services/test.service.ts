@@ -19,4 +19,8 @@ export class TestService {
   finish(test: FinishTest): Observable<Test> {
     return this.http.post<Test>(`${this.api}/finish`, test);
   }
+
+  getById(id: number): Observable<Test> {
+    return this.http.get<Test>(`${this.api}/${id}`);
+  }
 }

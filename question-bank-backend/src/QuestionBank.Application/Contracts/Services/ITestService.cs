@@ -6,4 +6,5 @@ public interface ITestService
 {
     Task<TestDto?> Create(CreateTestDto dto);
     Task<TestDto?> Finish(FinishTestDto dto);
+    Task<TestDto?> GetById(int id);
 }
