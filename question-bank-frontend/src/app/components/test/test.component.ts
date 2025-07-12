@@ -36,7 +36,7 @@ export class TestComponent implements OnInit {
       title: ['', [Validators.required, Validators.maxLength(50)]],
       totalQuestions: [null, [Validators.required, Validators.min(1), Validators.max(20)]],
       difficulty: ['', [Validators.required]],
-      topicIds: ['', [Validators.required]]
+      topicIds: [[], [Validators.required]]
     });
   }
 
@@ -47,15 +47,13 @@ export class TestComponent implements OnInit {
       const totalQuestions = this.formGroup.get('totalQuestions')?.value;
       const difficulty = this.formGroup.get('difficulty')?.value;
       const topicIds = this.formGroup.get('topicIds')?.value;
-      const topicIdList: number[] = [];
-      topicIdList.push(topicIds);
 
       const test: CreateTest = {
         userId: userId,
         title: title,
         totalQuestions: totalQuestions,
         difficulty: difficulty,
-        topicIds: topicIdList
+        topicIds: topicIds
       }
 
       this.testService.create(test).subscribe({

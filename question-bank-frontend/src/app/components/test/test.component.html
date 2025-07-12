@@ -59,9 +59,8 @@
 
         <div class="mb-3">
           <label class="form-label fw-semibold">Tópicos</label>
-          <select formControlName="topicIds" class="form-select">
-            <option value="" disabled selected>Escolha quais tópicos serão usados no sorteio de questões</option>
-            <option *ngFor="let topic of topics" [value]="topic.id">{{ topic.name }}</option>
+          <select multiple formControlName="topicIds" class="form-select">
+            <option *ngFor="let topic of topics" [ngValue]="topic.id">{{ topic.name }}</option>
           </select>
           <div *ngIf="formGroup.get('topicIds')?.touched && formGroup.get('topicIds')?.hasError('required')"
             class="text-danger mt-1 small">
