@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FinishTest, Test } from 'src/app/models/test.model';
 import { TestService } from 'src/app/services/test.service';
 
@@ -18,7 +18,8 @@ export class TestAnswerComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private testService: TestService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -72,5 +73,15 @@ export class TestAnswerComponent implements OnInit {
         error: () => this.errorMessage = 'Erro ao finalizar simulado. Tente novamente.'
       });
     }
+  }
+
+  getCorrectOptionText(questionIndex: number): string {
+    const options = this.currentTest.testQuestions[questionIndex].question.options;
+    const correct = options.find(opt => opt.isCorrect);
+    return correct?.text ?? 'Alternativa correta não informada';
+  }
+
+  onBack(): void {
+    this.router.navigate(['/tests']);
   }
 }

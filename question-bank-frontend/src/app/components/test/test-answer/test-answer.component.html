@@ -9,7 +9,7 @@
         {{ errorMessage }}
       </div>
 
-      <form [formGroup]="formGroup" (ngSubmit)="onSubmitForm()">
+      <form *ngIf="currentTest.status !== 'Finished'" [formGroup]="formGroup" (ngSubmit)="onSubmitForm()">
         <div formArrayName="questions">
           <div *ngFor="let questionGroup of questionForms.controls; let i = index" [formGroupName]="i" class="mb-4">
             <div class="card border-0 shadow-sm">
@@ -34,6 +34,42 @@
           <i class="bi bi-send-check me-1"></i>Finalizar
         </button>
       </form>
+
+      <div *ngIf="currentTest.status === 'Finished'">
+        <div *ngFor="let testQuestion of currentTest.testQuestions; let i = index" class="mb-4">
+          <div class="card border-0 shadow-sm">
+            <div class="card-header bg-light">
+              <strong>Questão {{ i + 1 }}</strong>
+            </div>
+            <div class="card-body">
+              <p class="mb-3">{{ testQuestion.question.statement }}</p>
+              <div *ngFor="let option of testQuestion.question.options" class="form-check mb-2">
+                <input type="radio" class="form-check-input" [id]="'fq' + i + 'opt' + option.id" [value]="option.id"
+                  [checked]="option.id === testQuestion.selectedOption?.id" disabled />
+                <label class="form-check-label" [for]="'fq' + i + 'opt' + option.id">
+                  {{ option.text }}
+                </label>
+              </div>
+              <div *ngIf="testQuestion.isCorrect" class="mt-2 text-success fw-semibold">
+                ✅ Você acertou!
+              </div>
+              <div *ngIf="testQuestion.isCorrect === false" class="mt-2 text-danger fw-semibold">
+                ❌ Você errou.
+                <br />
+                ✅ Alternativa correta: {{ getCorrectOptionText(i) }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-between align-items-center mt-4">
+          <button type="button" class="btn btn-outline-secondary" (click)="onBack()">
+            <i class="bi bi-arrow-left-circle me-1"></i>Voltar
+          </button>
+          <span class="badge bg-primary fs-6">
+            Acertos: {{ currentTest.numberOfCorrectAnswers }} / {{ currentTest.totalQuestions }}
+          </span>
+        </div>
+      </div>
     </div>
   </div>
 </div>
