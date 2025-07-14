@@ -68,7 +68,10 @@ export class TestAnswerComponent implements OnInit {
       }
 
       this.testService.finish(test).subscribe({
-        next: () => this.errorMessage = null,
+        next: test => {
+          this.errorMessage = null;
+          this.currentTest = test;
+        },
         error: () => this.errorMessage = 'Erro ao finalizar simulado. Tente novamente.'
       });
     }
