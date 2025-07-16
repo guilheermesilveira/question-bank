@@ -22,7 +22,7 @@ public class UserValidator : AbstractValidator<User>
         RuleFor(u => u.Password)
             .NotNull()
             .WithMessage("Password cannot be null")
-            .Length(5, 15)
-            .WithMessage("Password must contain between {MinLength} and {MaxLength} characters");
+            .Matches("^(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,}$")
+            .WithMessage("Password must be at least 8 characters long, contain one capital letter and one special character");
     }
 }

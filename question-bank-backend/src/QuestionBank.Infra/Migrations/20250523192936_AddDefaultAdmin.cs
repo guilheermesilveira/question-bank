@@ -8,8 +8,8 @@ namespace QuestionBank.Infra.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            var password = "$argon2id$v=19$m=16,t=2,p=1$TTJTMzhjWW9BeThBVXBNNQ$5rO9IfFZaeuGsG97A4P+eg";
-            
+            var password = "$argon2id$v=19$m=16,t=2,p=1$NEFHVUN2bnFGNzliSEpUQQ$+wXX+SRhO9nYnLTeEFGU0g";
+
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "Name", "Email", "Password", "IsAdmin" },
