@@ -30,7 +30,7 @@ export class UserComponent implements OnInit {
     this.formGroup = this.formBuilder.group({
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(15)]]
+      password: ['', [Validators.required, Validators.pattern("^(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,}$")]]
     });
   }
 

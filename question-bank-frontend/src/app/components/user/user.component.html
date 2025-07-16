@@ -36,8 +36,9 @@
           <div *ngIf="formGroup.get('password')?.touched && formGroup.get('password')?.invalid"
             class="text-danger mt-1 small">
             <span *ngIf="formGroup.get('password')?.errors?.['required']">Senha é obrigatória</span>
-            <span *ngIf="formGroup.get('password')?.errors?.['minlength']">Mínimo 5 caracteres</span>
-            <span *ngIf="formGroup.get('password')?.errors?.['maxlength']">Máximo 15 caracteres</span>
+            <span *ngIf="formGroup.get('password')?.errors?.['pattern']">
+              A senha deve ter no mínimo 8 caracteres, uma letra maiúscula e um caractere especial
+            </span>
           </div>
         </div>
 
